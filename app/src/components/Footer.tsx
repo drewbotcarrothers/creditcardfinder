@@ -24,6 +24,11 @@ export default function Footer() {
                   Compare Cards
                 </Link>
               </li>
+              <li>
+                <Link href="/blog" className="text-gray-400 hover:text-white text-sm">
+                  Blog
+                </Link>
+              </li>
             </ul>
           </div>
 
