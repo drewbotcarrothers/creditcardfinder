@@ -10,14 +10,14 @@ interface CardItemProps {
 }
 
 export default function CardItem({ card }: CardItemProps) {
-  const { selectedCards, addCard, removeCard } = useCompare();
-  const isSelected = selectedCards.some((c) => c.id === card.id);
+  const { isInCompare, addCard, removeCard } = useCompare();
+  const isSelected = isInCompare(card.slug);
 
   const toggleCompare = () => {
     if (isSelected) {
-      removeCard(card.id);
+      removeCard(card.slug);
     } else {
-      addCard(card);
+      addCard(card.slug);
     }
   };
 
