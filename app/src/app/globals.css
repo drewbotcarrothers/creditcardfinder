@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #FF0000;
+  --color-primary-hover: #CC0000;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #666666;
+  --color-border: #E5E5E5;
+  --color-card-shadow: rgba(0, 0, 0, 0.08);
+  --color-best-value: #DCFCE7;
+  --color-badge-bg: #F3F4F6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Card hover effect */
+.card-hover:hover {
+  transform: translateY(-2px);
+}
+
+/* Focus styles */
+input:focus,
+button:focus,
+a:focus {
+  outline: 2px solid #FF0000;
+  outline-offset: 2px;
+}
+
+/* Hide focus outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Preserve line breaks in detailed content */
+.preserve-whitespace {
+  white-space: pre-line;
+}
