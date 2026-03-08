@@ -34,13 +34,12 @@ jobs:
           du -sh ./app/out/
           
       - name: Deploy to Hostinger via FTP
-        run: |
-          sudo apt-get update && sudo apt-get install -y ncftp
-          
-          # Upload to Hostinger (port 21, target: public_html)
-          cd ./app/out
-          ncftpput -R -v -P 21 -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_HOST" /home/u163076614/domains/canadiancreditcardfinder.com/public_html .
-        env:
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_HOST: ${{ secrets.FTP_HOST }}
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./app/out/
+          server-dir: /home/u163076614/domains/canadiancreditcardfinder.com/public_html/
+          port: 21
+          timeout: 60000
