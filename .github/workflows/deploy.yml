@@ -41,9 +41,9 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y ncftp
           
-          # Upload to Hostinger
+          # Upload to Hostinger (port 21, target: public_html)
           cd ./app/out
-          ncftpput -R -v -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_HOST" . .
+          ncftpput -R -v -P 21 -u "$FTP_USERNAME" -p "$FTP_PASSWORD" "$FTP_HOST" /public_html .
         env:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
