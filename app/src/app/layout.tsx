@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import { Suspense } from "react";
 import { CompareProvider } from "@/context/CompareContext";
 
@@ -34,13 +35,14 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-gray-50 min-h-screen flex flex-col`}>
         <CompareProvider>
-          <Suspense fallback={<div className="h-16 bg-white border-b border-gray-200" />}>
+          <Suspense fallback={<div className="h-14 sm:h-16 bg-white border-b border-gray-200" />}>
             <Header />
           </Suspense>
-          <main className="flex-1">
+          <main className="flex-1 pb-14 sm:pb-0">
             {children}
           </main>
           <Footer />
+          <MobileBottomNav />
         </CompareProvider>
       </body>
     </html>
