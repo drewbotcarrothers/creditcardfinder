@@ -9,7 +9,7 @@ export interface CreditCard {
   annualFeeDetail: string;
   additionalCardFee: number;
   additionalCardFeeDisplay: string;
-  additionalCardFeeDetail: string;
+  additionalCardFeeDetail?: string;
   purchaseInterestRate: number;
   purchaseInterestRateDisplay: string;
   purchaseAPR?: string;
