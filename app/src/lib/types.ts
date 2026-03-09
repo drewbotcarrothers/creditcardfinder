@@ -9,11 +9,13 @@ export interface CreditCard {
   annualFeeDetail: string;
   additionalCardFee: number;
   additionalCardFeeDisplay: string;
-  additionalCardDetail: string;
+  additionalCardFeeDetail: string;
   purchaseInterestRate: number;
   purchaseInterestRateDisplay: string;
+  purchaseAPR?: string;
   cashAdvanceInterestRate: number;
   cashAdvanceInterestRateDisplay: string;
+  balanceTransferAPR?: string;
   rewardsProgram: string;
   welcomeBonus: string;
   welcomeBonusDetailed: string;
@@ -21,10 +23,13 @@ export interface CreditCard {
   welcomeBonusEligibility: string;
   features: string;
   featuresDetailed: string;
+  additionalInfo?: string;
   cardEligibility: string;
+  creditScore?: string;
   insurance: string;
   productLink: string;
   slug: string;
+  description?: string;
 }
 
 export interface FilterState {

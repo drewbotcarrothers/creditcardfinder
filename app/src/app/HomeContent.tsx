@@ -15,6 +15,128 @@ interface HomeContentProps {
     rewardsPrograms: string[];
 }
 
+// Parse credit score requirement
+function parseCreditScore(score: string): { min?: number; max?: number } {
+    switch (score) {
+        case 'excellent': return { min: 750 };
+        case 'good': return { min: 670, max: 749 };
+        case 'fair': return { min: 580, max: 669 };
+        case 'any': return {};
+        default: return {};
+    }
+}
+
+// Parse welcome bonus range
+function parseBonusRange(range: string): { min: number; max?: number } {
+    switch (range) {
+        case '0-200': return { min: 0, max: 200 };
+        case '200-500': return { min: 200, max: 500 };
+        case '500-1000': return { min: 500, max: 1000 };
+        case '1000+': return { min: 1000 };
+        default: return { min: 0 };
+    }
+}
+
+// Parse APR from card data
+function parseCardAPR(card: CreditCard): number | null {
+    // Try to extract APR from purchaseAPR field
+    if (!card.purchaseAPR) return null;
+    const match = card.purchaseAPR.match(/(\d+\.?\d*)/);
+    return match ? parseFloat(match[1]) : null;
+}
+
+// Check APR range match
+function matchesAprRange(card: CreditCard, aprRanges: string[]): boolean {
+    if (aprRanges.length === 0) return true;
+    
+    const cardAPR = parseCardAPR(card);
+    if (cardAPR === null) return false;
+    
+    return aprRanges.some(range => {
+        switch (range) {
+            case '0-intro':
+                return card.purchaseAPR?.toLowerCase().includes('0%') || 
+                       card.purchaseAPR?.toLowerCase().includes('intro');
+            case 'low':
+                return cardAPR < 15;
+            case 'standard':
+                return cardAPR >= 15 && cardAPR < 20;
+            case 'high':
+                return cardAPR >= 20;
+            default:
+                return true;
+        }
+    });
+}
+
+// Check credit score match
+function matchesCreditScore(card: CreditCard, creditScores: string[]): boolean {
+    if (creditScores.length === 0 || creditScores.includes('any')) return true;
+    
+    // Extract credit score requirement from card
+    const cardScoreText = card.creditScore?.toLowerCase() || '';
+    
+    return creditScores.some(score => {
+        const range = parseCreditScore(score);
+        
+        // Check if card mentions this score range
+        if (score === 'excellent') {
+            return cardScoreText.includes('excellent') || cardScoreText.includes('750');
+        }
+        if (score === 'good') {
+            return cardScoreText.includes('good') || cardScoreText.includes('700');
+        }
+        if (score === 'fair') {
+            return cardScoreText.includes('fair') || cardScoreText.includes('650');
+        }
+        return true;
+    });
+}
+
+// Check bonus value match
+function matchesBonusValue(card: CreditCard, bonusRanges: string[]): boolean {
+    if (bonusRanges.length === 0) return true;
+    
+    const bonusValue = parseBonusValue(card.welcomeBonusValue);
+    
+    return bonusRanges.some(range => {
+        const { min, max } = parseBonusRange(range);
+        if (max !== undefined) {
+            return bonusValue >= min && bonusValue <= max;
+        }
+        return bonusValue >= min;
+    });
+}
+
+// Check feature flags
+function hasFeature(card: CreditCard, feature: 'foreignFee' | 'loungeAccess' | 'balanceTransfer' | 'insurance'): boolean {
+    const features = card.features?.toLowerCase() || '';
+    const additionalInfo = card.additionalInfo?.toLowerCase() || '';
+    const combinedText = features + ' ' + additionalInfo;
+    
+    switch (feature) {
+        case 'foreignFee':
+            // Check for NO foreign transaction fee or "no annual fee" + mentions of foreign
+            return combinedText.includes('no foreign transaction fee') ||
+                   combinedText.includes('no foreign fees') ||
+                   (combinedText.includes('foreign') && combinedText.includes('none'));
+        case 'loungeAccess':
+            return combinedText.includes('lounge') ||
+                   combinedText.includes('priority pass') ||
+                   combinedText.includes('airport lounge');
+        case 'balanceTransfer':
+            return card.balanceTransferAPR !== undefined ||
+                   combinedText.includes('balance transfer');
+        case 'insurance':
+            return combinedText.includes('travel insurance') ||
+                   combinedText.includes('trip insurance') ||
+                   combinedText.includes('purchase protection') ||
+                   combinedText.includes('extended warranty');
+        default:
+            return false;
+    }
+}
+
 export default function HomeContent({ cards, categories, issuers, rewardsPrograms }: HomeContentProps) {
     const searchParams = useSearchParams();
     const [sortBy, setSortBy] = useState<SortOption>('featured');
@@ -25,9 +147,16 @@ export default function HomeContent({ cards, categories, issuers, rewardsProgram
     const selectedIssuers = searchParams.get('issuer')?.split(',').filter(Boolean) || [];
     const selectedFeeRanges = searchParams.get('fee')?.split(',').filter(Boolean) || [];
     const selectedRewardsPrograms = searchParams.get('rewards')?.split(',').filter(Boolean) || [];
+    const selectedCreditScores = searchParams.get('creditScore')?.split(',').filter(Boolean) || [];
+    const selectedBonuses = searchParams.get('bonus')?.split(',').filter(Boolean) || [];
+    const selectedAprs = searchParams.get('apr')?.split(',').filter(Boolean) || [];
     const searchQuery = searchParams.get('search')?.toLowerCase() || '';
+    const hasNoForeignFee = searchParams.get('noForeignFee') === 'true';
+    const hasLoungeAccess = searchParams.get('loungeAccess') === 'true';
+    const hasBalanceTransfer = searchParams.get('balanceTransfer') === 'true';
+    const hasInsurance = searchParams.get('insurance') === 'true';
 
-    // Filter cards with search
+    // Filter cards with all filters
     const filteredCards = useMemo(() => {
         let result = cards.filter(card => {
             // Category filter
@@ -51,6 +180,35 @@ export default function HomeContent({ cards, categories, issuers, rewardsProgram
 
             // Rewards program filter
             if (selectedRewardsPrograms.length > 0 && !selectedRewardsPrograms.includes(card.rewardsProgram)) {
+                return false;
+            }
+
+            // Credit score filter
+            if (selectedCreditScores.length > 0 && !matchesCreditScore(card, selectedCreditScores)) {
+                return false;
+            }
+
+            // Welcome bonus value filter
+            if (selectedBonuses.length > 0 && !matchesBonusValue(card, selectedBonuses)) {
+                return false;
+            }
+
+            // APR filter
+            if (selectedAprs.length > 0 && !matchesAprRange(card, selectedAprs)) {
+                return false;
+            }
+
+            // Boolean feature filters
+            if (hasNoForeignFee && !hasFeature(card, 'foreignFee')) {
+                return false;
+            }
+            if (hasLoungeAccess && !hasFeature(card, 'loungeAccess')) {
+                return false;
+            }
+            if (hasBalanceTransfer && !hasFeature(card, 'balanceTransfer')) {
+                return false;
+            }
+            if (hasInsurance && !hasFeature(card, 'insurance')) {
                 return false;
             }
 
@@ -92,12 +250,21 @@ export default function HomeContent({ cards, categories, issuers, rewardsProgram
         });
 
         return result;
-    }, [cards, selectedCategories, selectedIssuers, selectedFeeRanges, selectedRewardsPrograms, searchQuery, sortBy]);
+    }, [cards, selectedCategories, selectedIssuers, selectedFeeRanges, selectedRewardsPrograms, 
+        selectedCreditScores, selectedBonuses, selectedAprs, hasNoForeignFee, hasLoungeAccess, 
+        hasBalanceTransfer, hasInsurance, searchQuery, sortBy]);
 
     const hasActiveFilters = selectedCategories.length > 0 ||
         selectedIssuers.length > 0 ||
         selectedFeeRanges.length > 0 ||
         selectedRewardsPrograms.length > 0 ||
+        selectedCreditScores.length > 0 ||
+        selectedBonuses.length > 0 ||
+        selectedAprs.length > 0 ||
+        hasNoForeignFee ||
+        hasLoungeAccess ||
+        hasBalanceTransfer ||
+        hasInsurance ||
         searchQuery.length > 0;
 
     return (

@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 interface FilterPanelProps {
   categories: string[];
@@ -9,14 +9,43 @@ interface FilterPanelProps {
   rewardsPrograms: string[];
 }
 
+const creditScoreRanges = [
+  { label: 'Excellent (750+)', value: 'excellent', min: 750 },
+  { label: 'Good (670-749)', value: 'good', min: 670, max: 749 },
+  { label: 'Fair (580-669)', value: 'fair', min: 580, max: 669 },
+  { label: 'Any Score', value: 'any' },
+];
+
+const bonusRanges = [
+  { label: '$0-$200', value: '0-200', min: 0, max: 200 },
+  { label: '$200-$500', value: '200-500', min: 200, max: 500 },
+  { label: '$500-$1000', value: '500-1000', min: 500, max: 1000 },
+  { label: '$1000+', value: '1000+', min: 1000 },
+];
+
+const aprRanges = [
+  { label: '0% Intro APR', value: '0-intro' },
+  { label: 'Low APR (under 15%)', value: 'low', max: 15 },
+  { label: 'Standard (15-20%)', value: 'standard', min: 15, max: 20 },
+  { label: 'High APR (20%+)', value: 'high', min: 20 },
+];
+
 export default function FilterPanel({ categories, issuers, rewardsPrograms }: FilterPanelProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const selectedCategories = searchParams.get('category')?.split(',').filter(Boolean) || [];
   const selectedIssuers = searchParams.get('issuer')?.split(',').filter(Boolean) || [];
   const selectedFees = searchParams.get('fee')?.split(',').filter(Boolean) || [];
   const selectedRewards = searchParams.get('rewards')?.split(',').filter(Boolean) || [];
+  const selectedCreditScores = searchParams.get('creditScore')?.split(',').filter(Boolean) || [];
+  const selectedBonuses = searchParams.get('bonus')?.split(',').filter(Boolean) || [];
+  const selectedAprs = searchParams.get('apr')?.split(',').filter(Boolean) || [];
+  const hasNoForeignFee = searchParams.get('noForeignFee') === 'true';
+  const hasLoungeAccess = searchParams.get('loungeAccess') === 'true';
+  const hasBalanceTransfer = searchParams.get('balanceTransfer') === 'true';
+  const hasInsurance = searchParams.get('insurance') === 'true';
 
   const createQueryString = useCallback((
     name: string,
@@ -42,11 +71,24 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
     router.push(queryString ? `?${queryString}` : '/');
   };
 
+  const toggleBooleanFilter = (name: string, value: boolean) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set(name, 'true');
+    } else {
+      params.delete(name);
+    }
+    router.push(params.toString() ? `?${params.toString()}` : '/');
+  };
+
   const clearAllFilters = () => {
     router.push('/');
   };
 
-  const hasActiveFilters = selectedCategories.length + selectedIssuers.length + selectedFees.length + selectedRewards.length > 0;
+  const hasBasicFilters = selectedCategories.length + selectedIssuers.length + selectedFees.length + selectedRewards.length > 0;
+  const hasAdvancedFilters = selectedCreditScores.length + selectedBonuses.length + selectedAprs.length > 0 ||
+    hasNoForeignFee || hasLoungeAccess || hasBalanceTransfer || hasInsurance;
+  const hasActiveFilters = hasBasicFilters || hasAdvancedFilters;
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
@@ -146,6 +188,142 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
             ))}
           </div>
         </div>
+
+        {/* Advanced Filters Toggle */}
+        <div className="border-t border-gray-200 pt-4">
+          <button
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="flex items-center justify-between w-full text-sm font-semibold text-gray-900 hover:text-red-600 transition-colors"
+          >
+            <span>Advanced Filters</span>
+            <svg
+              className={`w-5 h-5 transition-transform ${showAdvanced ? 'rotate-180' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {hasAdvancedFilters && (
+            <span className="inline-block mt-1 text-xs text-red-600 font-medium">
+              {selectedCreditScores.length + selectedBonuses.length + selectedAprs.length + 
+               (hasNoForeignFee ? 1 : 0) + (hasLoungeAccess ? 1 : 0) + 
+               (hasBalanceTransfer ? 1 : 0) + (hasInsurance ? 1 : 0)} active
+            </span>
+          )}
+        </div>
+
+        {/* Advanced Filters Section */}
+        {showAdvanced && (
+          <div className="space-y-6 pt-2">
+            {/* Credit Score Filter */}
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-3">Credit Score Needed</h3>
+              <div className="space-y-2">
+                {creditScoreRanges.map((score) => (
+                  <label
+                    key={score.value}
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedCreditScores.includes(score.value)}
+                      onChange={() => toggleFilter('creditScore', score.value)}
+                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                    />
+                    <span className="text-sm text-gray-700">{score.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Welcome Bonus Filter */}
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-3">Welcome Bonus Value</h3>
+              <div className="space-y-2">
+                {bonusRanges.map((bonus) => (
+                  <label
+                    key={bonus.value}
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedBonuses.includes(bonus.value)}
+                      onChange={() => toggleFilter('bonus', bonus.value)}
+                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                    />
+                    <span className="text-sm text-gray-700">{bonus.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Purchase APR Filter */}
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-3">Purchase APR</h3>
+              <div className="space-y-2">
+                {aprRanges.map((apr) => (
+                  <label
+                    key={apr.value}
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedAprs.includes(apr.value)}
+                      onChange={() => toggleFilter('apr', apr.value)}
+                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                    />
+                    <span className="text-sm text-gray-700">{apr.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Toggle Features */}
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-3">Card Features</h3>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                  <input
+                    type="checkbox"
+                    checked={hasNoForeignFee}
+                    onChange={(e) => toggleBooleanFilter('noForeignFee', e.target.checked)}
+                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  />
+                  <span className="text-sm text-gray-700">No Foreign Transaction Fee</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                  <input
+                    type="checkbox"
+                    checked={hasLoungeAccess}
+                    onChange={(e) => toggleBooleanFilter('loungeAccess', e.target.checked)}
+                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  />
+                  <span className="text-sm text-gray-700">Airport Lounge Access</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                  <input
+                    type="checkbox"
+                    checked={hasBalanceTransfer}
+                    onChange={(e) => toggleBooleanFilter('balanceTransfer', e.target.checked)}
+                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  />
+                  <span className="text-sm text-gray-700">Balance Transfer Offer</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                  <input
+                    type="checkbox"
+                    checked={hasInsurance}
+                    onChange={(e) => toggleBooleanFilter('insurance', e.target.checked)}
+                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  />
+                  <span className="text-sm text-gray-700">Travel Insurance Included</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
