@@ -25,9 +25,9 @@ const bonusRanges = [
 
 const aprRanges = [
   { label: '0% Intro APR', value: '0-intro' },
-  { label: 'Low APR (under 15%)', value: 'low', max: 15 },
+  { label: 'Low APR (<15%)', value: 'low', max: 15 },
   { label: 'Standard (15-20%)', value: 'standard', min: 15, max: 20 },
-  { label: 'High APR (20%+)', value: 'high', min: 20 },
+  { label: 'High APR (20%+)️', value: 'high', min: 20 },
 ];
 
 export default function FilterPanel({ categories, issuers, rewardsPrograms }: FilterPanelProps) {
@@ -91,36 +91,36 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
   const hasActiveFilters = hasBasicFilters || hasAdvancedFilters;
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold">Filters</h2>
+    <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <h2 className="text-base sm:text-lg font-semibold">Filters</h2>
         {hasActiveFilters && (
           <button
             onClick={clearAllFilters}
-            className="text-red-600 hover:text-red-700 text-sm font-medium"
+            className="text-red-600 hover:text-red-700 text-xs sm:text-sm font-medium"
           >
             Clear all
           </button>
         )}
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-5 sm:space-y-6">
         {/* Category Filter */}
         <div>
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">Category</h3>
-          <div className="space-y-2">
+          <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Category</h3>
+          <div className="space-y-1.5 sm:space-y-2">
             {categories.map((category) => (
               <label
                 key={category}
-                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1.5 sm:p-1 rounded-lg touch-manipulation"
               >
                 <input
                   type="checkbox"
                   checked={selectedCategories.includes(category)}
                   onChange={() => toggleFilter('category', category)}
-                  className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer"
                 />
-                <span className="text-sm text-gray-700">{category}</span>
+                <span className="text-xs sm:text-sm text-gray-700">{category}</span>
               </label>
             ))}
           </div>
@@ -128,20 +128,20 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
 
         {/* Issuer Filter */}
         <div>
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">Issuer</h3>
-          <div className="space-y-2">
+          <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Issuer</h3>
+          <div className="space-y-1.5 sm:space-y-2 max-h-48 overflow-y-auto pr-2 scrollbar-thin">
             {issuers.map((issuer) => (
               <label
                 key={issuer}
-                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1.5 sm:p-1 rounded-lg touch-manipulation"
               >
                 <input
                   type="checkbox"
                   checked={selectedIssuers.includes(issuer)}
                   onChange={() => toggleFilter('issuer', issuer)}
-                  className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer"
                 />
-                <span className="text-sm text-gray-700">{issuer}</span>
+                <span className="text-xs sm:text-sm text-gray-700 truncate">{issuer}</span>
               </label>
             ))}
           </div>
@@ -149,20 +149,20 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
 
         {/* Annual Fee Filter */}
         <div>
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">Annual Fee</h3>
-          <div className="space-y-2">
+          <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Annual Fee</h3>
+          <div className="space-y-1.5 sm:space-y-2">
             {['$0', '$0-$50', '$50-$100', '$100-$200', '$200+'].map((fee) => (
               <label
                 key={fee}
-                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1.5 sm:p-1 rounded-lg touch-manipulation"
               >
                 <input
                   type="checkbox"
                   checked={selectedFees.includes(fee)}
                   onChange={() => toggleFilter('fee', fee)}
-                  className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer"
                 />
-                <span className="text-sm text-gray-700">{fee}</span>
+                <span className="text-xs sm:text-sm text-gray-700">{fee}</span>
               </label>
             ))}
           </div>
@@ -170,20 +170,20 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
 
         {/* Rewards Program Filter */}
         <div>
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">Rewards Program</h3>
-          <div className="space-y-2">
+          <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Rewards Program</h3>
+          <div className="space-y-1.5 sm:space-y-2">
             {rewardsPrograms.map((program) => (
               <label
                 key={program}
-                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1.5 sm:p-1 rounded-lg touch-manipulation"
               >
                 <input
                   type="checkbox"
                   checked={selectedRewards.includes(program)}
                   onChange={() => toggleFilter('rewards', program)}
-                  className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                  className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer"
                 />
-                <span className="text-sm text-gray-700">{program}</span>
+                <span className="text-xs sm:text-sm text-gray-700">{program}</span>
               </label>
             ))}
           </div>
@@ -193,7 +193,7 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
         <div className="border-t border-gray-200 pt-4">
           <button
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="flex items-center justify-between w-full text-sm font-semibold text-gray-900 hover:text-red-600 transition-colors"
+            className="flex items-center justify-between w-full text-sm font-semibold text-gray-900 hover:text-red-600 transition-colors py-1 touch-manipulation"
           >
             <span>Advanced Filters</span>
             <svg
@@ -216,23 +216,23 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
 
         {/* Advanced Filters Section */}
         {showAdvanced && (
-          <div className="space-y-6 pt-2">
+          <div className="space-y-5 sm:space-y-6 pt-2">
             {/* Credit Score Filter */}
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-3">Credit Score Needed</h3>
-              <div className="space-y-2">
+              <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Credit Score Needed</h3>
+              <div className="space-y-1.5 sm:space-y-2">
                 {creditScoreRanges.map((score) => (
                   <label
                     key={score.value}
-                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1.5 sm:p-1 rounded-lg touch-manipulation"
                   >
                     <input
                       type="checkbox"
                       checked={selectedCreditScores.includes(score.value)}
                       onChange={() => toggleFilter('creditScore', score.value)}
-                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer"
                     />
-                    <span className="text-sm text-gray-700">{score.label}</span>
+                    <span className="text-xs sm:text-sm text-gray-700">{score.label}</span>
                   </label>
                 ))}
               </div>
@@ -240,20 +240,20 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
 
             {/* Welcome Bonus Filter */}
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-3">Welcome Bonus Value</h3>
-              <div className="space-y-2">
+              <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Welcome Bonus Value</h3>
+              <div className="space-y-1.5 sm:space-y-2">
                 {bonusRanges.map((bonus) => (
                   <label
                     key={bonus.value}
-                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1.5 sm:p-1 rounded-lg touch-manipulation"
                   >
                     <input
                       type="checkbox"
                       checked={selectedBonuses.includes(bonus.value)}
                       onChange={() => toggleFilter('bonus', bonus.value)}
-                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer"
                     />
-                    <span className="text-sm text-gray-700">{bonus.label}</span>
+                    <span className="text-xs sm:text-sm text-gray-700">{bonus.label}</span>
                   </label>
                 ))}
               </div>
@@ -261,20 +261,20 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
 
             {/* Purchase APR Filter */}
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-3">Purchase APR</h3>
-              <div className="space-y-2">
+              <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Purchase APR</h3>
+              <div className="space-y-1.5 sm:space-y-2">
                 {aprRanges.map((apr) => (
                   <label
                     key={apr.value}
-                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded"
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1.5 sm:p-1 rounded-lg touch-manipulation"
                   >
                     <input
                       type="checkbox"
                       checked={selectedAprs.includes(apr.value)}
                       onChange={() => toggleFilter('apr', apr.value)}
-                      className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-red-600 border-gray-300 rounded focus:ring-red-500 cursor-pointer"
                     />
-                    <span className="text-sm text-gray-700">{apr.label}</span>
+                    <span className="text-xs sm:text-sm text-gray-700">{apr.label}</span>
                   </label>
                 ))}
               </div>
@@ -282,44 +282,72 @@ export default function FilterPanel({ categories, issuers, rewardsPrograms }: Fi
 
             {/* Toggle Features */}
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-3">Card Features</h3>
+              <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Card Features</h3>
               <div className="space-y-2">
-                <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
-                  <input
-                    type="checkbox"
-                    checked={hasNoForeignFee}
-                    onChange={(e) => toggleBooleanFilter('noForeignFee', e.target.checked)}
-                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-                  />
-                  <span className="text-sm text-gray-700">No Foreign Transaction Fee</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
-                  <input
-                    type="checkbox"
-                    checked={hasLoungeAccess}
-                    onChange={(e) => toggleBooleanFilter('loungeAccess', e.target.checked)}
-                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-                  />
-                  <span className="text-sm text-gray-700">Airport Lounge Access</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
-                  <input
-                    type="checkbox"
-                    checked={hasBalanceTransfer}
-                    onChange={(e) => toggleBooleanFilter('balanceTransfer', e.target.checked)}
-                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-                  />
-                  <span className="text-sm text-gray-700">Balance Transfer Offer</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
-                  <input
-                    type="checkbox"
-                    checked={hasInsurance}
-                    onChange={(e) => toggleBooleanFilter('insurance', e.target.checked)}
-                    className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
-                  />
-                  <span className="text-sm text-gray-700">Travel Insurance Included</span>
-                </label>
+                <div className="flex items-center justify-between py-1 cursor-pointer"
+                  onClick={() => toggleBooleanFilter('noForeignFee', !hasNoForeignFee)}
+                >
+                  <span className="text-xs sm:text-sm text-gray-700">No Foreign Transaction Fee</span>
+                  <button
+                    className={`relative inline-flex h-5 w-9 sm:h-6 sm:w-11 items-center rounded-full transition-colors ${
+                      hasNoForeignFee ? 'bg-red-600' : 'bg-gray-200'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 sm:h-4 sm:w-4 transform rounded-full bg-white transition-transform ${
+                        hasNoForeignFee ? 'translate-x-5 sm:translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+                <div className="flex items-center justify-between py-1 cursor-pointer"
+                  onClick={() => toggleBooleanFilter('loungeAccess', !hasLoungeAccess)}
+                >
+                  <span className="text-xs sm:text-sm text-gray-700">Airport Lounge Access</span>
+                  <button
+                    className={`relative inline-flex h-5 w-9 sm:h-6 sm:w-11 items-center rounded-full transition-colors ${
+                      hasLoungeAccess ? 'bg-red-600' : 'bg-gray-200'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 sm:h-4 sm:w-4 transform rounded-full bg-white transition-transform ${
+                        hasLoungeAccess ? 'translate-x-5 sm:translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+                <div className="flex items-center justify-between py-1 cursor-pointer"
+                  onClick={() => toggleBooleanFilter('balanceTransfer', !hasBalanceTransfer)}
+                >
+                  <span className="text-xs sm:text-sm text-gray-700">Balance Transfer Offer</span>
+                  <button
+                    className={`relative inline-flex h-5 w-9 sm:h-6 sm:w-11 items-center rounded-full transition-colors ${
+                      hasBalanceTransfer ? 'bg-red-600' : 'bg-gray-200'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 sm:h-4 sm:w-4 transform rounded-full bg-white transition-transform ${
+                        hasBalanceTransfer ? 'translate-x-5 sm:translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
+                <div className="flex items-center justify-between py-1 cursor-pointer"
+                  onClick={() => toggleBooleanFilter('insurance', !hasInsurance)}
+                >
+                  <span className="text-xs sm:text-sm text-gray-700">Travel Insurance Included</span>
+                  <button
+                    className={`relative inline-flex h-5 w-9 sm:h-6 sm:w-11 items-center rounded-full transition-colors ${
+                      hasInsurance ? 'bg-red-600' : 'bg-gray-200'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-3 w-3 sm:h-4 sm:w-4 transform rounded-full bg-white transition-transform ${
+                        hasInsurance ? 'translate-x-5 sm:translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
