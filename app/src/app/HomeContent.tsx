@@ -5,7 +5,8 @@ import { CreditCard, SortOption } from '@/lib/types';
 import { parseFeeRange, parseBonusValue } from '@/lib/utils';
 import FilterPanel from '@/components/FilterPanel';
 import CardGrid from '@/components/CardGrid';
-import { useState } from 'react';
+import SearchBar from '@/components/SearchBar';
+import { useState, useMemo } from 'react';
 
 interface HomeContentProps {
     cards: CreditCard[];
@@ -24,60 +25,88 @@ export default function HomeContent({ cards, categories, issuers, rewardsProgram
     const selectedIssuers = searchParams.get('issuer')?.split(',').filter(Boolean) || [];
     const selectedFeeRanges = searchParams.get('fee')?.split(',').filter(Boolean) || [];
     const selectedRewardsPrograms = searchParams.get('rewards')?.split(',').filter(Boolean) || [];
+    const searchQuery = searchParams.get('search')?.toLowerCase() || '';
 
-    // Filter cards
-    let filteredCards = cards.filter(card => {
-        // Category filter
-        if (selectedCategories.length > 0 && !selectedCategories.includes(card.category)) {
-            return false;
-        }
+    // Filter cards with search
+    const filteredCards = useMemo(() => {
+        let result = cards.filter(card => {
+            // Category filter
+            if (selectedCategories.length > 0 && !selectedCategories.includes(card.category)) {
+                return false;
+            }
 
-        // Issuer filter
-        if (selectedIssuers.length > 0 && !selectedIssuers.includes(card.issuer)) {
-            return false;
-        }
+            // Issuer filter
+            if (selectedIssuers.length > 0 && !selectedIssuers.includes(card.issuer)) {
+                return false;
+            }
 
-        // Fee range filter
-        if (selectedFeeRanges.length > 0) {
-            const matchesFee = selectedFeeRanges.some(range => {
-                const { min, max } = parseFeeRange(range);
-                return card.annualFee >= min && card.annualFee <= max;
-            });
-            if (!matchesFee) return false;
-        }
+            // Fee range filter
+            if (selectedFeeRanges.length > 0) {
+                const matchesFee = selectedFeeRanges.some(range => {
+                    const { min, max } = parseFeeRange(range);
+                    return card.annualFee >= min && card.annualFee <= max;
+                });
+                if (!matchesFee) return false;
+            }
 
-        // Rewards program filter
-        if (selectedRewardsPrograms.length > 0 && !selectedRewardsPrograms.includes(card.rewardsProgram)) {
-            return false;
-        }
+            // Rewards program filter
+            if (selectedRewardsPrograms.length > 0 && !selectedRewardsPrograms.includes(card.rewardsProgram)) {
+                return false;
+            }
 
-        return true;
-    });
+            // Search filter
+            if (searchQuery) {
+                const searchableText = [
+                    card.creditCardName,
+                    card.issuer,
+                    card.category,
+                    card.rewardsProgram,
+                    card.features,
+                    card.welcomeBonus,
+                    card.description,
+                ].filter(Boolean).join(' ').toLowerCase();
+                
+                if (!searchableText.includes(searchQuery)) {
+                    return false;
+                }
+            }
 
-    // Sort cards
-    filteredCards = [...filteredCards].sort((a, b) => {
-        switch (sortBy) {
-            case 'fee-low-high':
-                return a.annualFee - b.annualFee;
-            case 'fee-high-low':
-                return b.annualFee - a.annualFee;
-            case 'bonus-high-low':
-                return parseBonusValue(b.welcomeBonusValue) - parseBonusValue(a.welcomeBonusValue);
-            case 'name-az':
-                return a.creditCardName.localeCompare(b.creditCardName);
-            case 'featured':
-            default:
-                return 0;
-        }
-    });
+            return true;
+        });
+
+        // Sort cards
+        result = [...result].sort((a, b) => {
+            switch (sortBy) {
+                case 'fee-low-high':
+                    return a.annualFee - b.annualFee;
+                case 'fee-high-low':
+                    return b.annualFee - a.annualFee;
+                case 'bonus-high-low':
+                    return parseBonusValue(b.welcomeBonusValue) - parseBonusValue(a.welcomeBonusValue);
+                case 'name-az':
+                    return a.creditCardName.localeCompare(b.creditCardName);
+                case 'featured':
+                default:
+                    return 0;
+            }
+        });
+
+        return result;
+    }, [cards, selectedCategories, selectedIssuers, selectedFeeRanges, selectedRewardsPrograms, searchQuery, sortBy]);
 
     const hasActiveFilters = selectedCategories.length > 0 ||
         selectedIssuers.length > 0 ||
         selectedFeeRanges.length > 0 ||
-        selectedRewardsPrograms.length > 0;
+        selectedRewardsPrograms.length > 0 ||
+        searchQuery.length > 0;
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* Search Bar Section */}
+            <div className="mb-8">
+                <SearchBar cards={cards} />
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 {/* Filter Panel - Desktop */}
                 <aside className="hidden lg:block lg:col-span-1">
@@ -99,6 +128,11 @@ export default function HomeContent({ cards, categories, issuers, rewardsProgram
                                 <p className="text-gray-600">
                                     Showing <span className="font-semibold text-gray-900">{filteredCards.length}</span> of{' '}
                                     <span className="font-semibold text-gray-900">{cards.length}</span> cards
+                                    {searchQuery && (
+                                        <span className="ml-2 text-sm">
+                                            for "<span className="font-medium text-red-600">{searchQuery}</span>"
+                                        </span>
+                                    )}
                                 </p>
 
                                 {/* Mobile Filter Button */}
