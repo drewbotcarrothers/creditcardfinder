@@ -243,8 +243,8 @@ export default async function CardPage({ params }: CardPageProps) {
                   <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
                     <p className="text-xs sm:text-sm text-gray-600 mb-1">Additional Card</p>
                     <p className="text-xl sm:text-2xl font-bold text-gray-900">{card.additionalCardFeeDisplay}</p>
-                    {card.additionalCardDetail && (
-                      <p className="text-xs text-gray-500 mt-1">{card.additionalCardDetail}</p>
+                    {card.additionalCardFeeDetail && (
+                      <p className="text-xs text-gray-500 mt-1">{card.additionalCardFeeDetail}</p>
                     )}
                   </div>
                 </div>
