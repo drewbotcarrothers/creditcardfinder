@@ -17,8 +17,6 @@ export const metadata: Metadata = {
   description: "Canadian Credit Card Finder helps you compare the best Canadian credit cards. Filter by rewards, cashback, travel, and low interest rates. Find your perfect card.",
 };
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
