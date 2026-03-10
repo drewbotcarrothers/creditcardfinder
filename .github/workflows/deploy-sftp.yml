@@ -1,0 +1,44 @@
+name: Deploy to Hostinger via SFTP
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+        
+      - name: Build Next.js app
+        working-directory: app
+        run: npm run build
+        
+      - name: List build contents
+        run: |
+          echo "Contents of out folder:"
+          ls -la ./app/out/
+          echo "Size of build:"
+          du -sh ./app/out/
+          
+      - name: Deploy to Hostinger via SFTP
+        uses: wpilibsuite/sftp-upload-action@v1
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./app/out/
+          remote-dir: /home/u163076614/domains/canadiancreditcardfinder.com/public_html
+          port: 22
