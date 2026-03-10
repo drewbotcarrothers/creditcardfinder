@@ -27,11 +27,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google AdSense */}
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7909541570116920"
           crossOrigin="anonymous"
-        ></script>
+        />
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ENLPEM4YP"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-0ENLPEM4YP');
+            `,
+          }}
+        />
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-gray-50 min-h-screen flex flex-col`}>
         <CompareProvider>
