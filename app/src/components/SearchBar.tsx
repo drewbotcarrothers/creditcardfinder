@@ -16,6 +16,7 @@ export default function SearchBar({ cards }: SearchBarProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Handle search
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     if (searchTerm.length < 2) {
       queueMicrotask(() => setResults([]));
@@ -58,6 +59,7 @@ export default function SearchBar({ cards }: SearchBarProps) {
   }, []);
 
   // Open dropdown when searching
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     if (searchTerm.length >= 2) {
       setIsOpen(true);

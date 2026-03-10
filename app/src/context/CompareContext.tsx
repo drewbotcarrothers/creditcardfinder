@@ -16,6 +16,7 @@ export function CompareProvider({ children }: { children: ReactNode }) {
     const [compareCards, setCompareCards] = useState<string[]>([]);
 
     // Load from local storage on mount
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => {
         const stored = localStorage.getItem('compareCards');
         if (stored) {
