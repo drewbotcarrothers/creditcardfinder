@@ -26,20 +26,84 @@ jobs:
         working-directory: app
         run: npm run build
         
-      - name: List build contents
+      - name: Verify build output
         run: |
+          if [ ! -d "./app/out" ]; then
+            echo "❌ Error: Build output directory not found"
+            exit 1
+          fi
+          echo "✅ Build output verified"
           echo "Contents of out folder:"
           ls -la ./app/out/
-          echo "Size of build:"
+          echo ""
+          echo "Build size:"
           du -sh ./app/out/
+          echo ""
+          echo "File count:"
+          find ./app/out -type f | wc -l
+
+      - name: List all files for deployment
+        run: |
+          echo "📁 All files to be deployed:"
+          find ./app/out -type f | sort
           
       - name: Deploy to Hostinger via FTP
+        id: ftp-deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./app/out/
-          server-dir: ./
+          server-dir: /home/u163076614/domains/canadiancreditcardfinder.com/public_html/
           port: 21
-          timeout: 60000
+          timeout: 120000
+          log-level: verbose
+          exclude: |
+            **/.DS_Store
+            **/Thumbs.db
+
+      - name: Upload artifact as backup
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: ./app/out/
+          retention-days: 7
+
+  # Backup job: Create artifact for manual download
+  create-artifact:
+    runs-on: ubuntu-latest
+    needs: build-and-deploy
+    if: always()
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+        
+      - name: Build Next.js app
+        working-directory: app
+        run: npm run build
+        
+      - name: Create zip for manual upload
+        run: |
+          cd ./app/out
+          zip -r ../../build.zip .
+          cd ../..
+          ls -lh build.zip
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: canadiancreditcardfinder-build
+          path: build.zip
+          retention-days: 7
