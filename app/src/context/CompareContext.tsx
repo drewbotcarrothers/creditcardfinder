@@ -20,7 +20,8 @@ export function CompareProvider({ children }: { children: ReactNode }) {
         const stored = localStorage.getItem('compareCards');
         if (stored) {
             try {
-                setCompareCards(JSON.parse(stored));
+                const parsed = JSON.parse(stored);
+                queueMicrotask(() => setCompareCards(parsed));
             } catch (e) {
                 console.error('Failed to parse compare cards from local storage', e);
             }

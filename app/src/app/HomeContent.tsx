@@ -297,7 +297,7 @@ export default function HomeContent({ cards, categories, issuers, rewardsProgram
                                     <span className="font-semibold text-gray-900">{cards.length}</span> cards
                                     {searchQuery && (
                                         <span className="ml-2 text-sm">
-                                            for "<span className="font-medium text-red-600">{searchQuery}</span>"
+                                            for {'"'}<span className="font-medium text-red-600">{searchQuery}</span>{'"'}
                                         </span>
                                     )}
                                 </p>

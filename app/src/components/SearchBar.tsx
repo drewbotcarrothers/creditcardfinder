@@ -18,7 +18,7 @@ export default function SearchBar({ cards }: SearchBarProps) {
   // Handle search
   useEffect(() => {
     if (searchTerm.length < 2) {
-      setResults([]);
+      queueMicrotask(() => setResults([]));
       return;
     }
 
@@ -76,7 +76,7 @@ export default function SearchBar({ cards }: SearchBarProps) {
       }
       // Escape to close
       if (e.key === 'Escape') {
-        setIsOpen(false);
+        queueMicrotask(() => setIsOpen(false));
         inputRef.current?.blur();
       }
     }
