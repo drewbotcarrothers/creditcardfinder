@@ -8,7 +8,7 @@ export { default as aeroplanBlogPost } from './blog-aeroplan';
 import { noFeeBlogPost } from './blog-no-fee';
 import { businessBlogPost } from './blog-business';
 import { aeroplanBlogPost } from './blog-aeroplan';
-import { getBlogPosts as getOriginalBlogPosts } from './blog';
+import { getBlogPosts as getOriginalBlogPosts, getBlogPostBySlug as getOriginalBlogPostBySlug } from './blog';
 import { BlogPost } from './blog';
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
@@ -19,4 +19,12 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
     businessBlogPost,
     aeroplanBlogPost,
   ];
+}
+
+export async function getBlogPostBySlugFromAll(slug: string): Promise<BlogPost | null> {
+  const existingPost = await getOriginalBlogPostBySlug(slug);
+  if (existingPost) return existingPost;
+  
+  const newPosts = [noFeeBlogPost, businessBlogPost, aeroplanBlogPost];
+  return newPosts.find((post) => post.slug === slug) || null;
 }
