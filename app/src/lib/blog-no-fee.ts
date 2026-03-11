@@ -1,14 +1,14 @@
 import { BlogPost } from './blog';
 
 export const noFeeBlogPost: BlogPost = {
-  slug: 'best-no-annual-fee-credit-cards-canada-2025',
-  title: 'Best No Annual Fee Credit Cards in Canada (2025)',
+  slug: 'best-no-annual-fee-credit-cards-canada-2026',
+  title: 'Best No Annual Fee Credit Cards in Canada (2026)',
   category: 'Best Of',
   excerpt: 'Discover the best no annual fee credit cards in Canada. Earn rewards without paying yearly fees. Compare top cashback, travel, and student cards.',
   icon: '💰',
   image: '/credit_card_images/Simplii Financial Cash Back Visa Card.png',
   readingTime: '10 min read',
-  publishedDate: '2025-03-11',
+  publishedDate: '2026-03-11',
   keywords: [
     'no annual fee credit cards Canada',
     'free credit cards Canada',

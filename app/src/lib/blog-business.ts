@@ -1,14 +1,14 @@
 import { BlogPost } from './blog';
 
 export const businessBlogPost: BlogPost = {
-  slug: 'best-business-credit-cards-canada-2025',
-  title: 'Best Business Credit Cards in Canada (2025): Complete Guide',
+  slug: 'best-business-credit-cards-canada-2026',
+  title: 'Best Business Credit Cards in Canada (2026): Complete Guide',
   category: 'Business',
   excerpt: 'Compare the best business credit cards in Canada. Earn rewards on business expenses, build business credit, and access exclusive perks. From startup to established business.',
   icon: '💼',
   image: '/credit_card_images/American Express Business Gold Rewards Card.png',
   readingTime: '12 min read',
-  publishedDate: '2025-03-11',
+  publishedDate: '2026-03-11',
   keywords: [
     'business credit cards Canada',
     'best business credit cards',
@@ -18,7 +18,7 @@ export const businessBlogPost: BlogPost = {
     'startup credit cards',
   ],
   content: `
-    <p>Business credit cards are essential tools for Canadian entrepreneurs, offering rewards on business spending, building credit history, and separating personal and business finances. This comprehensive guide compares the best business credit cards for 2025, from startups to established enterprises.</p>
+    <p>Business credit cards are essential tools for Canadian entrepreneurs, offering rewards on business spending, building credit history, and separating personal and business finances. This comprehensive guide compares the best business credit cards for 2026, from startups to established enterprises.</p>
 
     <h2>Why Your Business Needs a Dedicated Credit Card</h2>
     <p>Separating business and personal finances is crucial for several reasons:</p>

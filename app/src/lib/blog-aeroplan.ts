@@ -1,14 +1,14 @@
 import { BlogPost } from './blog';
 
 export const aeroplanBlogPost: BlogPost = {
-  slug: 'maximize-aeroplan-points-canada-2025',
-  title: 'How to Maximize Aeroplan Points: The Complete Guide (2025)',
+  slug: 'maximize-aeroplan-points-canada-2026',
+  title: 'How to Maximize Aeroplan Points: The Complete Guide (2026)',
   category: 'Travel',
   excerpt: 'Master Aeroplan points in Canada. Learn how to earn, redeem, and maximize value. Best credit cards, sweet spots, partner airlines, and common mistakes to avoid.',
   icon: '✈️',
   image: '/credit_card_images/TD Aeroplan Visa Infinite Card.png',
   readingTime: '15 min read',
-  publishedDate: '2025-03-11',
+  publishedDate: '2026-03-11',
   keywords: [
     'Aeroplan points guide',
     'Aeroplan rewards',
