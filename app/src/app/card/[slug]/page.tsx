@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getCardBySlug, getRelatedCards, getCards } from '@/lib/data';
 import { CreditCard } from '@/lib/types';
 import StructuredData from '@/components/StructuredData';
+import { CardInternalLinks, BreadcrumbSchema } from '@/components/InternalLinks';
 
 interface CardPageProps {
   params: Promise<{ slug: string }>;
@@ -41,17 +42,27 @@ export async function generateMetadata({ params }: CardPageProps): Promise<Metad
       'credit card Canada',
       'compare credit cards',
       `${card.issuer} credit card`,
+      `${card.category} credit card Canada`,
     ],
     openGraph: {
       title,
       description: description.slice(0, 160),
       type: 'article',
       locale: 'en_CA',
+      images: [{
+        url: `https://canadiancreditcardfinder.com/credit_card_images/${card.imageFile}`,
+        width: 800,
+        height: 506,
+        alt: card.creditCardName,
+      }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description: description.slice(0, 160),
+    },
+    alternates: {
+      canonical: `https://canadiancreditcardfinder.com/card/${card.slug}`,
     },
   };
 }
@@ -74,6 +85,10 @@ function generateCardFAQ(card: CreditCard) {
       question: `What welcome bonus does the ${card.creditCardName} offer?`,
       answer: card.welcomeBonusDetailed || card.welcomeBonus || `The ${card.creditCardName} offers competitive rewards through the ${card.rewardsProgram} program.`,
     },
+    {
+      question: `Is the ${card.creditCardName} worth it?`,
+      answer: `The ${card.creditCardName} is ${card.annualFee === '$0' ? 'a great no-annual-fee option' : 'worth considering if you can maximize its rewards'}. ${card.welcomeBonus ? `The welcome bonus of ${card.welcomeBonus} adds significant value.` : ''} ${card.rewardsProgram ? `The ${card.rewardsProgram} program offers flexibility for redemptions.` : ''}`,
+    },
   ];
 }
 
@@ -87,27 +102,61 @@ export default async function CardPage({ params }: CardPageProps) {
 
   const relatedCards = await getRelatedCards(card, 4);
   const faqs = generateCardFAQ(card);
-
-  // Generate SEO-friendly content sections
   const featuresList = card.features ? card.features.split(',').map(f => f.trim()).filter(Boolean) : [];
   const insuranceList = card.insurance ? card.insurance.split(',').map(i => i.trim()).filter(Boolean) : [];
+  const schemaFeatures = [...featuresList.slice(0, 5), ...insuranceList.slice(0, 3)];
+
+  // Breadcrumb schema items
+  const breadcrumbItems = [
+    { name: 'Home', item: 'https://canadiancreditcardfinder.com' },
+    { name: card.category, item: `https://canadiancreditcardfinder.com/?category=${encodeURIComponent(card.category)}` },
+    { name: card.creditCardName, item: `https://canadiancreditcardfinder.com/card/${card.slug}` },
+  ];
 
   return (
     <>
+      <BreadcrumbSchema items={breadcrumbItems} />
+      
       <StructuredData 
         type="Product"
         data={{
           name: card.creditCardName,
-          description: `${card.creditCardName} by ${card.issuer}. ${card.annualFeeDisplay} annual fee. ${card.welcomeBonus || 'Earn rewards'}.`,
+          image: `https://canadiancreditcardfinder.com/credit_card_images/${card.imageFile}`,
+          description: `${card.creditCardName} by ${card.issuer}. ${card.annualFeeDisplay} annual fee. ${card.welcomeBonus || 'Earn rewards'}. ${card.rewardsProgram}.`,
           brand: {
             '@type': 'Brand',
             name: card.issuer,
           },
+          category: card.category,
           offers: {
             '@type': 'Offer',
-            price: card.annualFee,
+            price: card.annualFee.replace(/[$,]/g, ''),
             priceCurrency: 'CAD',
             availability: 'https://schema.org/InStock',
+            url: card.productLink,
+            priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            seller: {
+              '@type': 'Organization',
+              name: card.issuer,
+            },
+          },
+          additionalProperty: featuresList.slice(0, 5).map(feature => ({
+            '@type': 'PropertyValue',
+            name: 'Card Feature',
+            value: feature,
+          })),
+          review: {
+            '@type': 'Review',
+            reviewRating: {
+              '@type': 'Rating',
+              ratingValue: '5',
+              bestRating: '5',
+            },
+            author: {
+              '@type': 'Organization',
+              name: 'Canadian Credit Card Finder',
+            },
+            reviewBody: `${card.creditCardName} is ${card.category === 'Travel' ? 'an excellent choice for frequent travelers' : card.category === 'Cash Back' ? 'a solid cash back option' : 'worth considering based on your spending habits'}. ${card.annualFee === '$0' ? 'With no annual fee, it offers great value.' : `The ${card.annualFeeDisplay} annual fee is offset by the rewards potential.`}`,
           },
         }}
       />
@@ -344,6 +393,15 @@ export default async function CardPage({ params }: CardPageProps) {
                   >
                     View All Cards
                   </Link>
+                </div>
+
+                <!-- Internal Links -->
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <CardInternalLinks 
+                    category={card.category}
+                    issuer={card.issuer}
+                    rewardsProgram={card.rewardsProgram}
+                  />
                 </div>
               </div>
             </div>

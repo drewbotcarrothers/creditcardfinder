@@ -1,32 +1,45 @@
 import { MetadataRoute } from 'next';
 import { getCards } from '@/lib/data';
-
-export const dynamic = 'force-static';
+import { getBlogPosts } from '@/lib/blog';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const cards = await getCards();
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://canadiancreditcardfinder.com';
-
-    const cardPages = cards.map((card) => ({
-        url: `${baseUrl}/card/${card.slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-    }));
-
-    return [
-        {
-            url: baseUrl,
-            lastModified: new Date(),
-            changeFrequency: 'daily',
-            priority: 1,
-        },
-        {
-            url: `${baseUrl}/compare`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9,
-        },
-        ...cardPages,
-    ];
+  const baseUrl = 'https://canadiancreditcardfinder.com';
+  
+  const cards = await getCards();
+  const posts = await getBlogPosts();
+  
+  // Static pages
+  const staticPages = [
+    { url: baseUrl, priority: 1.0 },
+    { url: `${baseUrl}/blog`, priority: 0.8 },
+    { url: `${baseUrl}/compare`, priority: 0.8 },
+    { url: `${baseUrl}/quiz`, priority: 0.9 },
+  ];
+  
+  // Card pages
+  const cardPages = cards.map((card) => ({
+    url: `${baseUrl}/card/${card.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+  
+  // Blog pages
+  const blogPages = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.publishedDate),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+  
+  return [
+    ...staticPages.map((page) => ({
+      url: page.url,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: page.priority,
+    })),
+    ...cardPages,
+    ...blogPages,
+  ];
 }

@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getBlogPostBySlug, getBlogPosts } from '@/lib/blog';
+import { BlogInternalLinks, BreadcrumbSchema } from '@/components/InternalLinks';
 import StructuredData from '@/components/StructuredData';
 
 interface BlogPostProps {
@@ -37,11 +38,15 @@ export async function generateMetadata({ params }: BlogPostProps): Promise<Metad
       type: 'article',
       locale: 'en_CA',
       publishedTime: post.publishedDate,
+      authors: ['Canadian Credit Card Finder'],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
+    },
+    alternates: {
+      canonical: `https://canadiancreditcardfinder.com/blog/${post.slug}`,
     },
   };
 }
@@ -54,28 +59,48 @@ export default async function BlogPost({ params }: BlogPostProps) {
     notFound();
   }
 
-  // Generate FAQ schema if post has FAQs
-  const faqSchema = post.faqs? {
-    mainEntity: post.faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  } : null;
+  // Get related posts for internal linking
+  const allPosts = await getBlogPosts();
+  const relatedPosts = allPosts
+    .filter((p) => p.category === post.category && p.slug !== post.slug)
+    .slice(0, 3)
+    .map((p) => ({ slug: p.slug, title: p.title }));
+
+  // FAQ schema
+  const faqSchema = post.faqs
+    ? {
+        mainEntity: post.faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }
+    : null;
+
+  // Breadcrumb items
+  const breadcrumbItems = [
+    { name: 'Home', item: 'https://canadiancreditcardfinder.com' },
+    { name: 'Blog', item: 'https://canadiancreditcardfinder.com/blog' },
+    { name: post.title, item: `https://canadiancreditcardfinder.com/blog/${post.slug}` },
+  ];
 
   return (
     <>
+      <BreadcrumbSchema items={breadcrumbItems} />
+      
       <StructuredData
         type="BlogPosting"
         data={{
           headline: post.title,
           description: post.excerpt,
+          image: post.image || 'https://canadiancreditcardfinder.com/logo.png',
           author: {
             '@type': 'Organization',
             name: 'Canadian Credit Card Finder',
+            url: 'https://canadiancreditcardfinder.com',
           },
           publisher: {
             '@type': 'Organization',
@@ -86,16 +111,17 @@ export default async function BlogPost({ params }: BlogPostProps) {
             },
           },
           datePublished: post.publishedDate,
+          dateModified: post.publishedDate,
           mainEntityOfPage: {
             '@type': 'WebPage',
             '@id': `https://canadiancreditcardfinder.com/blog/${post.slug}`,
           },
+          keywords: post.keywords?.join(', '),
+          articleSection: post.category,
         }}
       />
 
-      {faqSchema && (
-        <StructuredData type="FAQPage" data={faqSchema} />
-      )}
+      {faqSchema && <StructuredData type="FAQPage" data={faqSchema} />}
 
       <div className="min-h-screen bg-gray-50">
         {/* Hero */}
@@ -168,6 +194,14 @@ export default async function BlogPost({ params }: BlogPostProps) {
           )}
 
           {/* Back to Blog */}
+          <!-- Internal Links -->
+          <div className="mt-8">
+            <BlogInternalLinks 
+              category={post.category}
+              relatedPosts={relatedPosts}
+            />
+          </div>
+
           <div className="mt-12 text-center">
             <Link
               href="/blog"

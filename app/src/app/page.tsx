@@ -1,7 +1,38 @@
 import Link from 'next/link';
+import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getCards, getUniqueCategories, getUniqueIssuers, getUniqueRewardsPrograms } from '@/lib/data';
+import { OrganizationSchema } from '@/components/InternalLinks';
 import HomeContent from './HomeContent';
+
+export const metadata: Metadata = {
+  title: 'Compare Canadian Credit Cards 2025 | Find the Best Card for You',
+  description: 'Compare 90+ Canadian credit cards. Find the best cashback, travel, and rewards cards. Filter by annual fee, credit score & more. Updated March 2025.',
+  keywords: [
+    'Canadian credit cards',
+    'credit card comparison',
+    'best credit cards Canada',
+    'cashback credit cards',
+    'travel rewards cards',
+    'no annual fee cards',
+    'credit card offers',
+  ],
+  openGraph: {
+    title: 'Compare Canadian Credit Cards 2025 | Canadian Credit Card Finder',
+    description: 'Find your perfect credit card. Compare 90+ cards by rewards, fees, and benefits.',
+    type: 'website',
+    locale: 'en_CA',
+    siteName: 'Canadian Credit Card Finder',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Compare Canadian Credit Cards 2025',
+    description: 'Find your perfect credit card. Compare 90+ cards by rewards, fees, and benefits.',
+  },
+  alternates: {
+    canonical: 'https://canadiancreditcardfinder.com',
+  },
+};
 
 export default async function HomePage() {
   const [cards, categories, issuers, rewardsPrograms] = await Promise.all([
@@ -12,7 +43,43 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div>
+    <>
+      <OrganizationSchema />
+      
+      {/* ItemList schema for card rich results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            itemListElement: cards.slice(0, 6).map((card, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              item: {
+                '@type': 'Product',
+                name: card.creditCardName,
+                description: `${card.creditCardName} by ${card.issuer}. ${card.annualFeeDisplay} annual fee. ${card.category} card with ${card.rewardsProgram} rewards.`,
+                image: `https://canadiancreditcardfinder.com/credit_card_images/${card.imageFile}`,
+                brand: {
+                  '@type': 'Brand',
+                  name: card.issuer,
+                },
+                category: card.category,
+                offers: {
+                  '@type': 'Offer',
+                  price: card.annualFee,
+                  priceCurrency: 'CAD',
+                  availability: 'https://schema.org/InStock',
+                  url: `https://canadiancreditcardfinder.com/card/${card.slug}`,
+                },
+              },
+            })),
+          }),
+        }}
+      />
+
+      <div>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

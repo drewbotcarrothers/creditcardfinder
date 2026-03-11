@@ -13,8 +13,23 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Canadian Credit Card Finder | Compare & Find Your Perfect Card 2025",
-  description: "Canadian Credit Card Finder helps you compare the best Canadian credit cards. Filter by rewards, cashback, travel, and low interest rates. Find your perfect card.",
+  title: 'Canadian Credit Card Finder | Compare & Find Your Perfect Card 2025',
+  description: 'Compare 90+ Canadian credit cards. Filter by rewards, cashback, travel perks, annual fees & more. Find your perfect card with our personalized quiz.',
+  keywords: [
+    'Canadian credit cards',
+    'credit card comparison',
+    'best credit cards Canada',
+    'cashback cards',
+    'travel rewards cards',
+    'credit card quiz',
+  ],
+  openGraph: {
+    title: 'Canadian Credit Card Finder | Compare 90+ Cards',
+    description: 'Find your perfect credit card. Compare rewards, fees, and benefits.',
+    type: 'website',
+    locale: 'en_CA',
+    siteName: 'Canadian Credit Card Finder',
+  },
 };
 
 export default function RootLayout({
@@ -25,7 +40,32 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Google AdSense */}
+        <!-- Organization Schema - Global -->
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Canadian Credit Card Finder',
+              description: 'Compare Canadian credit cards and find your perfect match',
+              url: 'https://canadiancreditcardfinder.com',
+              logo: 'https://canadiancreditcardfinder.com/logo.png',
+              sameAs: [
+                'https://twitter.com/creditcardca',
+              ],
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: 'https://canadiancreditcardfinder.com/?search={search_term_string}',
+                },
+                'query-input': 'required name=search_term_string',
+              },
+            }),
+          }}
+        />
+        <!-- Google AdSense -->
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7909541570116920"
