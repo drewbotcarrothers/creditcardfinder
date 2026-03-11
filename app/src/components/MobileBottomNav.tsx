@@ -20,8 +20,8 @@ export default function MobileBottomNav() {
         {/* Home */}
         <Link
           href="/"
-          className={`flex flex-col items-center justify-center py-2 px-4 flex-1 min-h-[44px] touch-manipulation ${
-            isActive('/') && !pathname.includes('/card/') && !pathname.includes('/blog/')
+          className={`flex flex-col items-center justify-center py-2 px-3 flex-1 min-h-[44px] touch-manipulation ${
+            isActive('/') && !pathname.includes('/card/') && !pathname.includes('/blog/') && !pathname.includes('/quiz/')
               ? 'text-red-600'
               : 'text-gray-500'
           }`}
@@ -32,10 +32,23 @@ export default function MobileBottomNav() {
           <span className="text-xs mt-0.5">Home</span>
         </Link>
 
+        {/* Quiz */}
+        <Link
+          href="/quiz"
+          className={`flex flex-col items-center justify-center py-2 px-3 flex-1 min-h-[44px] touch-manipulation ${
+            isActive('/quiz') ? 'text-red-600' : 'text-gray-500'
+          }`}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+          </svg>
+          <span className="text-xs mt-0.5">Quiz</span>
+        </Link>
+
         {/* Blog */}
         <Link
           href="/blog"
-          className={`flex flex-col items-center justify-center py-2 px-4 flex-1 min-h-[44px] touch-manipulation ${
+          className={`flex flex-col items-center justify-center py-2 px-3 flex-1 min-h-[44px] touch-manipulation ${
             isActive('/blog') ? 'text-red-600' : 'text-gray-500'
           }`}
         >
@@ -48,7 +61,7 @@ export default function MobileBottomNav() {
         {/* Compare */}
         <Link
           href="/compare"
-          className={`flex flex-col items-center justify-center py-2 px-4 flex-1 min-h-[44px] touch-manipulation relative ${
+          className={`flex flex-col items-center justify-center py-2 px-3 flex-1 min-h-[44px] touch-manipulation relative ${
             isActive('/compare') ? 'text-red-600' : 'text-gray-500'
           }`}
         >
