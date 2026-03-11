@@ -48,8 +48,16 @@ export default async function BlogPage() {
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <Link href={`/blog/${post.slug}`}>
-                  <div className="h-48 bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center">
-                    <span className="text-6xl">{post.icon}</span>
+                  <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
+                    {post.image ? (
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-contain p-4 hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <span className="text-6xl">{post.icon}</span>
+                    )}
                   </div>
                 </Link>
                 

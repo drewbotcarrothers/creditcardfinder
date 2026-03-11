@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: BlogPostProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
-  
+
   if (!post) {
     return {
       title: 'Post Not Found',
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: BlogPostProps): Promise<Metad
 export default async function BlogPost({ params }: BlogPostProps) {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
-  
+
   if (!post) {
     notFound();
   }
@@ -116,6 +116,16 @@ export default async function BlogPost({ params }: BlogPostProps) {
               <span className="text-gray-400 text-sm">{post.readingTime}</span>
             </div>
 
+            <div className="mb-6 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 max-h-80">
+              {post.image && (
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-full object-contain max-h-80 p-6"
+                />
+              )}
+            </div>
+
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">{post.title}</h1>
             <p className="text-xl text-gray-300">{post.excerpt}</p>
           </div>
@@ -123,9 +133,21 @@ export default async function BlogPost({ params }: BlogPostProps) {
 
         {/* Content */}
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="bg-white rounded-xl shadow-md p-8 lg:p-12">
+          <div className="bg-white rounded-2xl shadow-lg p-8 lg:p-12">
             <div 
-              className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-red-600 prose-strong:text-gray-900"
+              className="prose prose-lg max-w-none 
+                prose-headings:text-gray-900 
+                prose-p:text-gray-700 
+                prose-a:text-red-600 hover:prose-a:text-red-700
+                prose-strong:text-gray-900
+                prose-h2:text-2xl prose-h2:font-bold prose-h2:mt-10 prose-h2:mb-4
+                prose-h3:text-xl prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-3
+                prose-ul:list-disc prose-ul:pl-5 prose-ul:space-y-2
+                prose-ol:list-decimal prose-ol:pl-5 prose-ol:space-y-2
+                prose-blockquote:border-l-4 prose-blockquote:border-red-500 prose-blockquote:bg-gray-50 prose-blockquote:pl-4 prose-blockquote:py-2 prose-blockquote:italic
+                prose-table:w-full prose-table:border-collapse
+                prose-th:bg-gray-100 prose-th:font-semibold prose-th:p-3 prose-th:text-left
+                prose-td:border prose-td:border-gray-200 prose-td:p-3"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>

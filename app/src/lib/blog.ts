@@ -5,6 +5,7 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   icon: string;
+  image: string;
   readingTime: string;
   publishedDate: string;
   keywords: string[];
@@ -18,6 +19,7 @@ const blogPosts: BlogPost[] = [
     category: 'Best Of',
     excerpt: 'Discover the top credit cards in Canada for 2025. Compare cashback, travel rewards, low interest, and premium cards to find your perfect match.',
     icon: '🏆',
+    image: '/credit_card_images/American Express Cobalt Card.png',
     readingTime: '8 min read',
     publishedDate: '2025-03-08',
     keywords: [
@@ -106,6 +108,7 @@ const blogPosts: BlogPost[] = [
     category: 'Credit Tips',
     excerpt: 'Learn what credit score you need for different types of credit cards in Canada and how to improve your score to qualify for premium cards.',
     icon: '📊',
+    image: '/credit_card_images/MBNA True Line Mastercard.png',
     readingTime: '6 min read',
     publishedDate: '2025-03-07',
     keywords: [
@@ -222,6 +225,7 @@ const blogPosts: BlogPost[] = [
     category: 'Guide',
     excerpt: 'Everything you need to know about credit card sign-up bonuses. Learn how to qualify, maximize value, and avoid common pitfalls.',
     icon: '🎁',
+    image: '/credit_card_images/American Express Gold Rewards Card.png',
     readingTime: '7 min read',
     publishedDate: '2025-03-06',
     keywords: [
@@ -350,6 +354,7 @@ const blogPosts: BlogPost[] = [
     category: 'Guide',
     excerpt: 'Find out when paying an annual fee for a credit card actually saves you money. We break down the math and benefits of premium cards.',
     icon: '💰',
+    image: '/credit_card_images/American Express - The Platinum Card.png',
     readingTime: '6 min read',
     publishedDate: '2025-03-05',
     keywords: [
@@ -502,6 +507,7 @@ const blogPosts: BlogPost[] = [
     category: 'Best Of',
     excerpt: 'Compare the top cash back credit cards in Canada. Find cards with the highest earn rates, no annual fees, and biggest welcome bonuses.',
     icon: '💵',
+    image: '/credit_card_images/Rogers Red World Elite Mastercard.png',
     readingTime: '7 min read',
     publishedDate: '2025-03-04',
     keywords: [
@@ -667,6 +673,7 @@ const blogPosts: BlogPost[] = [
     category: 'Best Of',
     excerpt: 'Choosing your first credit card as a student? Learn which cards offer the best rewards, no fees, and credit-building features for students.',
     icon: '🎓',
+    image: '/credit_card_images/Student BMO CashBack Mastercard.png',
     readingTime: '5 min read',
     publishedDate: '2025-03-03',
     keywords: [
