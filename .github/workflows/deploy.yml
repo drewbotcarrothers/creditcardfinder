@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./app/out/
-          server-dir: /home/u163076614/domains/canadiancreditcardfinder.com/public_html/
+          server-dir: ./
           port: 21
           timeout: 120000
           log-level: verbose
