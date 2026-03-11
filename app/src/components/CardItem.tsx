@@ -28,7 +28,7 @@ export default function CardItem({ card }: CardItemProps) {
       {/* Card Image */}
       <Link href={`/card/${card.slug}`} className="block relative aspect-[1.58/1] bg-gradient-to-br from-gray-50 to-gray-100">
         <Image
-          src={`/images/cards/${card.imageFile}`}
+          src={`/credit_card_images/${card.imageFile}`}
           alt={card.creditCardName}
           fill
           className="object-contain p-3 sm:p-4 group-hover:scale-105 transition-transform duration-300"
