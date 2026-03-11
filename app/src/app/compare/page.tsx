@@ -1,31 +1,10 @@
 'use client';
 
-import { Metadata } from 'next';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCompare } from '@/context/CompareContext';
 import { CreditCard } from '@/lib/types';
-
-export const metadata: Metadata = {
-  title: 'Compare Credit Cards Side-by-Side | Canadian Credit Card Finder',
-  description: 'Compare up to 3 Canadian credit cards side-by-side. Compare annual fees, interest rates, rewards, welcome bonuses, and more to find your perfect card.',
-  keywords: [
-    'compare credit cards',
-    'credit card comparison Canada',
-    'card comparison tool',
-    'side by side credit card comparison',
-  ],
-  openGraph: {
-    title: 'Compare Credit Cards Side-by-Side',
-    description: 'Compare up to 3 Canadian credit cards and find your perfect match.',
-    type: 'website',
-    locale: 'en_CA',
-  },
-  alternates: {
-    canonical: 'https://canadiancreditcardfinder.com/compare',
-  },
-};
 
 // Comparison table icon - scales/balance
 const CompareIcon = () => (

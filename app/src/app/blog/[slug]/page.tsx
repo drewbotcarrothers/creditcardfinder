@@ -194,7 +194,7 @@ export default async function BlogPost({ params }: BlogPostProps) {
           )}
 
           {/* Back to Blog */}
-          <!-- Internal Links -->
+          {/* Internal Links */}
           <div className="mt-8">
             <BlogInternalLinks 
               category={post.category}

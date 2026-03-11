@@ -40,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <!-- Organization Schema - Global -->
+        {/** Organization Schema - Global */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

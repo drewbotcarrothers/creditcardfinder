@@ -395,7 +395,7 @@ export default async function CardPage({ params }: CardPageProps) {
                   </Link>
                 </div>
 
-                <!-- Internal Links -->
+                {/* Internal Links */}
                 <div className="mt-6 pt-6 border-t border-gray-100">
                   <CardInternalLinks 
                     category={card.category}
