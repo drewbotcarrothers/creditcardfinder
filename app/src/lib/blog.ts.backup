@@ -1,7 +1,3 @@
-import { noFeeBlogPost } from './blog-no-fee';
-import { businessBlogPost } from './blog-business';
-import { aeroplanBlogPost } from './blog-aeroplan';
-
 export interface BlogPost {
   slug: string;
   title: string;
@@ -817,10 +813,6 @@ const blogPosts: BlogPost[] = [
       },
     ],
   },
-,
-  noFeeBlogPost,
-  businessBlogPost,
-  aeroplanBlogPost,
 ];
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
