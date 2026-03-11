@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { CreditCard } from '@/lib/types';
 import { getCards } from '@/lib/data';
 import CardItem from '@/components/CardItem';
@@ -10,6 +9,7 @@ import CardItem from '@/components/CardItem';
 interface Question {
   id: number;
   question: string;
+  subtitle?: string;
   options: {
     label: string;
     value: string;
@@ -20,27 +20,28 @@ interface Question {
 const questions: Question[] = [
   {
     id: 1,
-    question: "What's your top priority?",
+    question: "Do you want a card with no annual fee?",
+    subtitle: "No-fee cards are great for beginners, but fee cards often have better rewards",
     options: [
-      { label: "Cash back on everyday purchases", value: "cashback", icon: "💵" },
-      { label: "Travel rewards & points", value: "travel", icon: "✈️" },
-      { label: "Low interest rates", value: "lowinterest", icon: "📉" },
-      { label: "No annual fee", value: "nofee", icon: "🆓" },
+      { label: "Yes, I want a no annual fee card", value: "nofee", icon: "🆓" },
+      { label: "I'm open to paying an annual fee", value: "withfee", icon: "💳" },
     ],
   },
   {
     id: 2,
-    question: "How much do you spend monthly on groceries?",
+    question: "What's your top priority?",
+    subtitle: "What matters most to you in a credit card?",
     options: [
-      { label: "Under $300", value: "low", icon: "🛒" },
-      { label: "$300 - $600", value: "medium", icon: "🛒🛒" },
-      { label: "$600 - $1,000", value: "high", icon: "🛒🛒🛒" },
-      { label: "Over $1,000", value: "veryhigh", icon: "🛒🛒🛒🛒" },
+      { label: "Cash back on everyday purchases", value: "cashback", icon: "💵" },
+      { label: "Travel rewards & points", value: "travel", icon: "✈️" },
+      { label: "Low interest rates", value: "lowinterest", icon: "📉" },
+      { label: "Building credit / first card", value: "building", icon: "📈" },
     ],
   },
   {
     id: 3,
     question: "Do you travel frequently?",
+    subtitle: "Airport lounges, travel insurance, and foreign transaction fees",
     options: [
       { label: "Multiple times per year", value: "frequent", icon: "🌍" },
       { label: "Once or twice a year", value: "occasional", icon: "✈️" },
@@ -50,21 +51,24 @@ const questions: Question[] = [
   },
   {
     id: 4,
-    question: "What's your credit score range?",
+    question: "What's your biggest spending category?",
+    subtitle: "This helps us find cards with the best bonus rates for you",
     options: [
-      { label: "Excellent (760+)", value: "excellent", icon: "⭐⭐⭐" },
-      { label: "Good (660-759)", value: "good", icon: "⭐⭐" },
-      { label: "Fair (560-659)", value: "fair", icon: "⭐" },
-      { label: "Not sure / Building credit", value: "building", icon: "📈" },
+      { label: "Groceries", value: "groceries", icon: "🛒" },
+      { label: "Dining & Restaurants", value: "dining", icon: "🍽️" },
+      { label: "Gas & Transit", value: "gas", icon: "⛽" },
+      { label: "Everything is about equal", value: "mixed", icon: "🔄" },
     ],
   },
   {
     id: 5,
-    question: "Are you willing to pay an annual fee?",
+    question: "What's your credit score range?",
+    subtitle: "Some cards require higher scores for approval",
     options: [
-      { label: "Yes, if the rewards justify it", value: "yes", icon: "💰" },
-      { label: "Only if it's under $100", value: "moderate", icon: "💵" },
-      { label: "No annual fee only", value: "no", icon: "🆓" },
+      { label: "Excellent (760+)", value: "excellent", icon: "⭐⭐⭐" },
+      { label: "Good (660-759)", value: "good", icon: "⭐⭐" },
+      { label: "Fair (560-659)", value: "fair", icon: "⭐" },
+      { label: "Not sure / New to credit", value: "new", icon: "🌱" },
     ],
   },
 ];
@@ -94,50 +98,117 @@ export default function QuizPage() {
   };
 
   const calculateRecommendations = (cards: CreditCard[], userAnswers: Record<number, string>): CreditCard[] => {
+    const feePreference = userAnswers[1]; // Annual fee preference
+    const priority = userAnswers[2]; // Top priority
+    const travelFreq = userAnswers[3]; // Travel frequency
+    const spendingCategory = userAnswers[4]; // Spending category
+    const creditScore = userAnswers[5]; // Credit score
+
     let scoredCards = cards.map(card => {
       let score = 0;
+      const fee = parseFloat(card.annualFee.replace(/[$,]/g, '')) || 0;
 
-      // Priority scoring
-      const priority = userAnswers[1];
-      if (priority === 'cashback' && card.rewardsProgram.toLowerCase().includes('cash')) {
-        score += 10;
-      } else if (priority === 'travel' && (card.category === 'Travel' || card.rewardsProgram.includes('Aeroplan') || card.rewardsProgram.includes('Avion') || card.rewardsProgram.includes('Aventura'))) {
-        score += 10;
-      } else if (priority === 'lowinterest' && card.purchaseAPR && parseFloat(card.purchaseAPR) < 15) {
-        score += 10;
-      } else if (priority === 'nofee' && card.annualFee === '$0') {
-        score += 10;
+      // Annual Fee scoring (Question 1) - BIG impact
+      if (feePreference === 'nofee') {
+        if (fee === 0) {
+          score += 15; // Strong preference for no-fee cards
+        } else {
+          score -= 10; // Penalty for fee cards
+        }
+      } else if (feePreference === 'withfee') {
+        if (fee > 0) {
+          score += 3; // Slight preference for fee cards if user is open to them
+        }
       }
 
-      // Grocery spending bonus
-      const grocerySpend = userAnswers[2];
-      if ((grocerySpend === 'high' || grocerySpend === 'veryhigh') && card.category === 'Cash Back') {
-        score += 5;
+      // Priority scoring (Question 2)
+      if (priority === 'cashback') {
+        if (card.rewardsProgram.toLowerCase().includes('cash') || 
+            card.category === 'Cash Back' ||
+            card.category === 'Cashback') {
+          score += 12;
+        }
+      } else if (priority === 'travel') {
+        if (card.category === 'Travel' || 
+            card.rewardsProgram.includes('Aeroplan') || 
+            card.rewardsProgram.includes('Avion') || 
+            card.rewardsProgram.includes('Aventura') ||
+            card.rewardsProgram.includes('AIR MILES')) {
+          score += 12;
+        }
+      } else if (priority === 'lowinterest') {
+        const apr = card.purchaseAPR ? parseFloat(card.purchaseAPR) : 20;
+        if (apr < 13) {
+          score += 12; // Very low APR
+        } else if (apr < 17) {
+          score += 6; // Moderately low APR
+        }
+      } else if (priority === 'building') {
+        if (fee === 0) {
+          score += 8; // No-fee cards best for building credit
+        }
+        if (card.category === 'Student') {
+          score += 10; // Student cards great for beginners
+        }
       }
 
-      // Travel frequency
-      const travelFreq = userAnswers[3];
-      if (travelFreq === 'frequent' && (card.category === 'Travel' || card.rewardsProgram.includes('Aeroplan') || card.rewardsProgram.includes('Avion'))) {
-        score += 8;
-      } else if (travelFreq === 'never' && card.category === 'Cash Back') {
-        score += 5;
+      // Travel frequency scoring (Question 3)
+      if (travelFreq === 'frequent') {
+        if (card.category === 'Travel') {
+          score += 8;
+        }
+        if (card.foreignTransactionFee === false || card.foreignTransactionFee === 'No') {
+          score += 5; // No FX fees important for frequent travelers
+        }
+      } else if (travelFreq === 'never') {
+        if (card.category === 'Travel') {
+          score -= 5; // Penalty travel cards for non-travelers
+        }
+        if (card.category === 'Cash Back') {
+          score += 5; // Boost cash back for non-travelers
+        }
       }
 
-      // Credit score consideration
-      const creditScore = userAnswers[4];
+      // Spending category scoring (Question 4)
+      if (spendingCategory === 'groceries') {
+        if (card.category === 'Cash Back' || card.creditCardName.toLowerCase().includes('grocery')) {
+          score += 6;
+        }
+      } else if (spendingCategory === 'dining') {
+        if (card.category === 'Dining' || 
+            card.rewardsProgram.toLowerCase().includes('dining') ||
+            card.category === 'Restaurant') {
+          score += 6;
+        }
+      } else if (spendingCategory === 'gas') {
+        if (card.rewardsProgram.toLowerCase().includes('gas') || 
+            card.rewardsProgram.includes('AIR MILES')) {
+          score += 6;
+        }
+      }
+
+      // Credit score consideration (Question 5)
       if (creditScore === 'excellent') {
-        score += 3; // Premium cards more accessible
-      } else if ((creditScore === 'fair' || creditScore === 'building') && card.annualFee === '$0') {
-        score += 5; // Recommend no-fee cards for building credit
-      }
-
-      // Annual fee willingness
-      const feeWilling = userAnswers[5];
-      if (feeWilling === 'no' && card.annualFee === '$0') {
-        score += 8;
-      } else if (feeWilling === 'moderate') {
-        const fee = parseFloat(card.annualFee.replace(/[$,]/g, ''));
-        if (fee < 100) score += 3;
+        score += 2; // Can get premium cards
+      } else if (creditScore === 'good') {
+        score += 1;
+      } else if (creditScore === 'fair') {
+        if (fee === 0) {
+          score += 4; // No-fee safer for fair credit
+        } else {
+          score -= 3; // Harder to get approved for fee cards
+        }
+      } else if (creditScore === 'new') {
+        if (fee === 0) {
+          score += 5; // No-fee cards best for new credit
+        }
+        if (card.category === 'Student') {
+          score += 8;
+        }
+        // Penalty for premium travel cards
+        if (card.category === 'Travel' && fee > 100) {
+          score -= 5;
+        }
       }
 
       // Welcome bonus boost
@@ -197,13 +268,18 @@ export default function QuizPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
                 {questions[currentQuestion].question}
               </h2>
-              <p className="text-gray-500">
-                Select the option that best describes you
-              </p>
+              {questions[currentQuestion].subtitle && (
+                <p className="text-gray-500">
+                  {questions[currentQuestion].subtitle}
+                </p>
+              )}
             </div>
 
             {/* Options */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className={questions[currentQuestion].options.length === 2 ? 
+              "grid grid-cols-1 sm:grid-cols-2 gap-4" : 
+              "grid grid-cols-1 sm:grid-cols-2 gap-4"
+            }>
               {questions[currentQuestion].options.map((option) => (
                 <button
                   key={option.value}
