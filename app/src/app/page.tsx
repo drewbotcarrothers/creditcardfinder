@@ -126,7 +126,7 @@ export default async function HomePage() {
           rewardsPrograms={rewardsPrograms}
         />
       </Suspense>
-    </>
+    </div>
   );
 }
 
