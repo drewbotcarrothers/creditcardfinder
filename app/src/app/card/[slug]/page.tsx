@@ -130,7 +130,7 @@ export default async function CardPage({ params }: CardPageProps) {
           category: card.category,
           offers: {
             '@type': 'Offer',
-            price: card.annualFee.replace(/[$,]/g, ''),
+            price: String(card.annualFee).replace(/[$,]/g, ''),
             priceCurrency: 'CAD',
             availability: 'https://schema.org/InStock',
             url: card.productLink,
