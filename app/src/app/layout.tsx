@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import CompareBar from "@/components/CompareBar";
 import { Suspense } from "react";
 import { CompareProvider } from "@/context/CompareContext";
 
@@ -96,6 +97,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <MobileBottomNav />
+          <CompareBar />
         </CompareProvider>
       </body>
     </html>
