@@ -31,6 +31,7 @@ export default function CardItem({ card }: CardItemProps) {
           src={`/credit_card_images/${card.imageFile}`}
           alt={card.creditCardName}
           fill
+          loading="lazy"
           className="object-contain p-3 sm:p-4 group-hover:scale-105 transition-transform duration-300"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />

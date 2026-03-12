@@ -10,6 +10,8 @@ import { CompareProvider } from "@/context/CompareContext";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: 'swap',
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -65,14 +67,14 @@ export default function RootLayout({
             }),
           }}
         />
-        {/** Google AdSense */}
+        {/** Google AdSense - Deferred for performance */}
         <script
-          async
+          defer
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7909541570116920"
           crossOrigin="anonymous"
         />
-        {/* Google Analytics */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ENLPEM4YP"></script>
+        {/* Google Analytics - Deferred for performance */}
+        <script defer src="https://www.googletagmanager.com/gtag/js?id=G-0ENLPEM4YP"></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
