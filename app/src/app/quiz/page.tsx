@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { CreditCard } from '@/lib/types';
 import { getCards } from '@/lib/data';
 import CardItem from '@/components/CardItem';
+import EmailCapture from '@/components/EmailCapture';
 
 interface Question {
   id: number;
@@ -382,8 +383,17 @@ export default function QuizPage() {
               </div>
             )}
 
+            {/* Email Capture Section */}
+            <div className="mt-8">
+              <EmailCapture 
+                location="quiz-results" 
+                title="🎯 Get Your Personalized Card Alerts"
+                description="We'll email you when better offers appear for cards matching your profile. No spam, just savings."
+              />
+            </div>
+
             {/* Call to Action */}
-            <div className="mt-12 text-center bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-8">
+            <div className="mt-8 text-center bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-8">
               <h3 className="text-xl font-bold text-gray-900 mb-2">Want to see all cards?</h3>
               <p className="text-gray-600 mb-4">
                 Browse our complete database and filter by your preferences
