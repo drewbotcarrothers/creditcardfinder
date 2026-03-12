@@ -1,6 +1,7 @@
 import { noFeeBlogPost } from './blog-no-fee';
 import { businessBlogPost } from './blog-business';
 import { aeroplanBlogPost } from './blog-aeroplan';
+import { bestCards2026Post } from './blog-posts-2026';
 
 export interface BlogPost {
   slug: string;
@@ -12,26 +13,28 @@ export interface BlogPost {
   image: string;
   readingTime: string;
   publishedDate: string;
+  updatedDate?: string;
   keywords: string[];
   faqs?: { question: string; answer: string }[];
 }
 
 const blogPosts: BlogPost[] = [
+  bestCards2026Post,
   {
-    slug: 'best-credit-cards-canada-2025',
-    title: 'Best Credit Cards in Canada for 2025: Complete Guide',
-    category: 'Best Of',
-    excerpt: 'Discover the top credit cards in Canada for 2025. Compare cashback, travel rewards, low interest, and premium cards to find your perfect match.',
-    icon: '🏆',
-    image: '/credit_card_images/American Express Cobalt Card.png',
-    readingTime: '8 min read',
-    publishedDate: '2025-03-08',
+    slug: 'understanding-credit-scores-canada-2026',
+    title: 'Credit Score Requirements 2026: What Score Do You Need?',
+    category: 'Credit Tips',
+    excerpt: 'Updated 2026 guide on credit score requirements for Canadian credit cards. Learn what score you need for premium, mid-tier, and student cards.',
+    icon: '📊',
+    image: '/credit_card_images/MBNA True Line Mastercard.png',
+    readingTime: '6 min read',
+    publishedDate: '2026-03-11',
     keywords: [
-      'best credit cards Canada',
-      'top credit cards 2025',
-      'credit card comparison',
-      'best rewards credit cards',
-      'Canadian credit cards',
+      'credit score Canada 2026',
+      'minimum credit score credit card',
+      'credit score requirements',
+      'improve credit score',
+      'credit card approval 2026',
     ],
     content: `
       <p>Choosing the right credit card can save you hundreds (or even thousands) of dollars per year. With so many options available in Canada, it's important to understand what each card offers and how it matches your spending habits.</p>
