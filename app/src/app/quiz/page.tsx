@@ -106,7 +106,7 @@ export default function QuizPage() {
 
     let scoredCards = cards.map(card => {
       let score = 0;
-      const fee = parseFloat(card.annualFee.replace(/[$,]/g, '')) || 0;
+      const fee = card.annualFee || 0;  // annualFee is already a number
 
       // Annual Fee scoring (Question 1) - BIG impact
       if (feePreference === 'nofee') {
@@ -137,7 +137,7 @@ export default function QuizPage() {
           score += 12;
         }
       } else if (priority === 'lowinterest') {
-        const apr = card.purchaseAPR ? parseFloat(card.purchaseAPR) : 20;
+        const apr = card.purchaseInterestRate || 20;
         if (apr < 13) {
           score += 12; // Very low APR
         } else if (apr < 17) {
@@ -157,8 +157,10 @@ export default function QuizPage() {
         if (card.category === 'Travel') {
           score += 8;
         }
-        if (card.foreignTransactionFee === false || card.foreignTransactionFee === 'No') {
-          score += 5; // No FX fees important for frequent travelers
+        // Check features for no FX fee mention
+        if (card.features?.toLowerCase().includes('no foreign') || 
+            card.features?.toLowerCase().includes('no fx fee')) {
+          score += 5;
         }
       } else if (travelFreq === 'never') {
         if (card.category === 'Travel') {
