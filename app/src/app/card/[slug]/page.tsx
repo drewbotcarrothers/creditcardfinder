@@ -192,7 +192,7 @@ export default async function CardPage({ params }: CardPageProps) {
               {/* Card Image */}
               <div className="relative w-full max-w-xs sm:max-w-sm lg:max-w-md aspect-[1.58/1] bg-white rounded-xl overflow-hidden shadow-xl mx-auto lg:mx-0">
                 <Image
-                  src={`/images/cards/${card.imageFile}`}
+                  src={`/credit_card_images/${card.imageFile}`}
                   alt={card.creditCardName}
                   fill
                   className="object-contain p-4 sm:p-6"
@@ -420,7 +420,7 @@ export default async function CardPage({ params }: CardPageProps) {
                   >
                     <div className="relative aspect-[1.58/1] bg-gray-100">
                       <Image
-                        src={`/images/cards/${relatedCard.imageFile}`}
+                        src={`/credit_card_images/${relatedCard.imageFile}`}
                         alt={relatedCard.creditCardName}
                         fill
                         className="object-contain p-3 sm:p-4"
