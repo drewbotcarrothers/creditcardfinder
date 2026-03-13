@@ -67,7 +67,7 @@ export const aeroplanBlogPost: BlogPost = {
     </table>
 
     <blockquote>
-      <p><strong>Key Insight:</strong> The difference between 0.7¢ and 5¢ per point is 7x! A 100,000-point balance is worth ${'$'}700 at the low end or ${'$'}5,000+ when redeemed strategically for premium flights.</p>
+      <p><strong>Key Insight:</strong> The difference between 0.7¢ and 5¢ per point is 7x! A 100,000-point balance is worth $700 at the low end or $5,000+ when redeemed strategically for premium flights.</p>
     </blockquote>
 
     <h2>Best Credit Cards for Earning Aeroplan Points</h2>
@@ -77,20 +77,20 @@ export const aeroplanBlogPost: BlogPost = {
       <li><strong>1.5x points</strong> on gas, groceries, and direct Air Canada purchases</li>
       <li><strong>1x point</strong> on everything else</li>
       <li>Welcome bonus: Up to 60,000 Aeroplan points</li>
-      <li>${'$'}139 annual fee (free first year)</li>
+      <li>$139 annual fee (free first year)</li>
       <li>Free checked bag on Air Canada flights</li>
-      <li>Nexus credit (${'$'}100)</li>
+      <li>Nexus credit ($100)</li>
     </ul>
     <p><strong>Best for:</strong> Regular Air Canada flyers who want straightforward Aeroplan earning.</p>
 
     <h3>2. American Express Cobalt Card</h3>
     <ul>
-      <li><strong>5x points</strong> on food & drinks (including food delivery)</li>
+      <li><strong>5x points</strong> on food &amp; drinks (including food delivery)</li>
       <li><strong>3x points</strong> on streaming services</li>
       <li><strong>2x points</strong> on travel and transit</li>
       <li><strong>1x point</strong> on everything else</li>
       <li>1:1 transfer to Aeroplan (and other partners)</li>
-      <li>${'$'}155.88 annual fee (${'$'}12.99/month)</li>
+      <li>$155.88 annual fee ($12.99/month)</li>
     </ul>
     <p><strong>Best for:</strong> Foodies and high spenders. The 5x multiplier on dining (transferred 1:1) outpaces dedicated Aeroplan cards.</p>
 
@@ -99,7 +99,7 @@ export const aeroplanBlogPost: BlogPost = {
       <li><strong>1.5x points</strong> on gas, groceries, Air Canada purchases, and at Starbucks</li>
       <li><strong>1x point</strong> on everything else</li>
       <li>Welcome bonus: Up to 50,000 Aeroplan points</li>
-      <li>${'$'}139 annual fee (rebated first year)</li>
+      <li>$139 annual fee (rebated first year)</li>
       <li>Maple Leaf Lounge access (one-time)</li>
       <li>Free checked bag</li>
     </ul>
@@ -109,8 +109,8 @@ export const aeroplanBlogPost: BlogPost = {
     <ul>
       <li><strong>Earn Membership Rewards</strong> (1:1 to Aeroplan)</li>
       <li>Unlimited airport lounge access (Priority Pass + Centurion)</li>
-      <li>${'$'}200 annual travel credit</li>
-      <li>${'$'}799 annual fee (offset by credits)</li>
+      <li>$200 annual travel credit</li>
+      <li>$799 annual fee (offset by credits)</li>
     </ul>
     <p><strong>Best for:</strong> Frequent travelers who maximize lounge access. The ability to transfer MR to Aeroplan AND other programs provides flexibility.</p>
 
@@ -128,11 +128,11 @@ export const aeroplanBlogPost: BlogPost = {
     <h3>Shopping Portal Multipliers</h3>
     <p>Aeroplan eStore bonus events:</p>
     <ul>
-      <li>Regular rates: 1-5 points per ${'$'}1 spent</li>
+      <li>Regular rates: 1-5 points per $1 spent</li>
       <li>Bonus events: Up to 10x points (Apple, Sephora, etc.)</li>
       <li>Special promotions: 15-20x during Black Friday, Aeroplan anniversary</li>
     </ul>
-    <p><strong>Strategy:</strong> Shop through eStore portal > pay with Aeroplan-earning card = double dipping!</p>
+    <p><strong>Strategy:</strong> Shop through eStore portal &gt; pay with Aeroplan-earning card = double dipping!</p>
 
     <h2>Sweet Spot Redemptions</h2>
 
@@ -141,7 +141,7 @@ export const aeroplanBlogPost: BlogPost = {
     <ul>
       <li>Toronto → Boston, New York, Chicago: 6,000-10,000 points</li>
       <li>Vancouver → Seattle, Portland: 6,000-8,000 points</li>
-      <li>Typical cash price: ${'$'}300-500</li>
+      <li>Typical cash price: $300-500</li>
       <li>Point value: 3-5¢ each!</li>
     </ul>
 
@@ -149,7 +149,7 @@ export const aeroplanBlogPost: BlogPost = {
     <p>One of the best uses of Aeroplan:</p>
     <ul>
       <li>Cost: 60,000-70,000 points (one-way business)</li>
-      <li>Cash price: ${'$'}3,000-5,000+</li>
+      <li>Cash price: $3,000-5,000+</li>
       <li>Point value: 4-7¢ each</li>
       <li>Best partners: Lufthansa, Swiss, Austrian, Turkish, TAP Portugal</li>
     </ul>
@@ -168,7 +168,7 @@ export const aeroplanBlogPost: BlogPost = {
       <li>❌ Merchandise (0.8¢/point)</li>
       <li>❌ Gift cards (0.9-1.0¢/point)</li>
       <li>❌ Pay with Points at checkout (0.7¢/point)</li>
-      <li>❌ High-fuel surcharge routes (taxes ${'$'}400+ on "free" flight)</li>
+      <li>❌ High-fuel surcharge routes (taxes $400+ on "free" flight)</li>
       <li>❌ Last-minute economy flights (often better to pay cash)</li>
     </ul>
 
@@ -177,7 +177,7 @@ export const aeroplanBlogPost: BlogPost = {
     <h3>The Award Chart</h3>
     <p>Aeroplan uses a zone-based chart:</p>
     <ul>
-      <li><strong>Zone 1:</strong> Within Canada & USA (continental)</li>
+      <li><strong>Zone 1:</strong> Within Canada &amp; USA (continental)</li>
       <li><strong>Zone 2:</strong> Within Atlantic (Europe, North Africa, Middle East)</li>
       <li><strong>Zone 3:</strong> Pacific (Asia, Australia, Oceania)</li>
       <li><strong>Zone 4:</strong> South America</li>
@@ -211,16 +211,16 @@ export const aeroplanBlogPost: BlogPost = {
       <p><strong>Pro Tip:</strong> Air Canada often uses dynamic pricing with higher rates during peak times. Partner airline awards (Lufthansa, United, ANA, etc.) are fixed-price, making them better value during high-demand periods.</p>
     </blockquote>
 
-    <h2>Fees and Taxes Strategy</h2>
+    <h2>Fees and Taxes Strategy,/h2>
 
-    <p>Taxes can range from ${'$'}50 to ${'$'}600+ on award tickets depending on:</p>
+    <p>Taxes can range from $50 to $600+ on award tickets depending on:</p>
     <ul>
-      <li><strong>Departure airport:</strong> Canadian airports charge high fees (${'$'}100-200)</li>
+      <li><strong>Departure airport:</strong> Canadian airports charge high fees ($100-200)</li>
       <li><strong>Carrier:</strong> Some airlines pass fuel surcharges (Air Canada, Lufthansa)</li>
-      <li><strong>Route:</strong> UK flights have Air Passenger Duty (${'$'}100+)</li>
+      <li><strong>Route:</strong> UK flights have Air Passenger Duty ($100+)</li>
     </ul>
 
-    <p><strong>Minimize taxes tips:</p>
+    <p><strong>Minimize taxes tips:</strong></p>
     <ul>
       <li>Fly United (USA-based, minimal surcharges)</li>
       <li>Choose ANA, EVA, Singapore for Asia (low/no surcharges)</li>
@@ -228,19 +228,19 @@ export const aeroplanBlogPost: BlogPost = {
       <li>Depart from USA airports when possible (lower fees)</li>
     </ul>
 
-    <h2>Status Benefits with Aeroplan Credit Cards</h2>
+    <h2>Status Benefits with Aeroplan Credit Cards,/h2>
 
     <p>Aeroplan cards include valuable perks:</p>
     <ul>
-      <li><strong>Free checked bag:</strong> Saves ${'$'}30-50 per flight</li>
+      <li><strong>Free checked bag:</strong> Saves $30-50 per flight</li>
       <li><strong>Priority boarding:</strong> Zone 2 boarding (get overhead bin space)</li>
       <li><strong>Maple Leaf Lounge access:</strong> One-time pass (some cards)</li>
-      <li><strong>Nexus credit:</strong> ${'$'}100 rebate for expedited customs</li>
+      <li><strong>Nexus credit:</strong> $100 rebate for expedited customs</li>
     </ul>
 
     <p>These perks can justify annual fees even before counting rewards earned.</p>
 
-    <h2>Common Aeroplan Mistakes to Avoid</h2>
+    <h2>Common Aeroplan Mistakes to Avoid,/h2>
 
     <ol>
       <li><strong>Merchandise redemptions:</strong> Sacrificing 70%+ of potential value</li>
@@ -254,7 +254,7 @@ export const aeroplanBlogPost: BlogPost = {
 
     <h2>The Bottom Line</h2>
     <p>Aeroplan is Canada's most valuable points program when used strategically. Focus earning on category bonuses (Cobalt for dining), transfer partners when promotions run, and target 2.5¢+ per point on redemptions. Avoid merchandise and pay-with-points options entirely.</p>
-    <p>With proper planning, 100,000 Aeroplan points can deliver ${'$'}2,500-5,000+ in flight value—enough for business class to Europe or multiple domestic trips.</p>
+    <p>With proper planning, 100,000 Aeroplan points can deliver $2,500-5,000+ in flight value—enough for business class to Europe or multiple domestic trips.</p>
   `,
   faqs: [
     {
@@ -267,7 +267,7 @@ export const aeroplanBlogPost: BlogPost = {
     },
     {
       question: 'Do Aeroplan points expire?',
-      answer: 'Aeroplan points expire after 18 months of inactivity. Any earning, redemption, or transfer resets the clock. Having an Aeroplan credit card or Elite status prevents expiration entirely. Set calendar reminders to make small purchases through the eStore if you\'re not active to keep points alive.',
+      answer: 'Aeroplan points expire after 18 months of inactivity. Any earning, redemption, or transfer resets the clock. Having an Aeroplan credit card or Elite status prevents expiration entirely. Set calendar reminders to make small purchases through the eStore if you're not active to keep points alive.',
     },
     {
       question: 'Can I transfer points from other programs to Aeroplan?',
@@ -275,7 +275,7 @@ export const aeroplanBlogPost: BlogPost = {
     },
     {
       question: 'What are the taxes on Aeroplan award flights?',
-      answer: 'Taxes vary widely: Canadian domestic flights (${'$'}50-150), USA flights (${'$'}50-100), Europe flights (${'$'}150-400+ depending on airline—Lufthansa adds surcharges, United doesn't). The "sweet spot" is flying United or other partners without fuel surcharges. Departures from lower-fee airports (USA, not UK) also reduce costs.',
+      answer: 'Taxes vary widely: Canadian domestic flights ($50-150), USA flights ($50-100), Europe flights ($150-400+ depending on airline—Lufthansa adds surcharges, United does not). The "sweet spot" is flying United or other partners without fuel surcharges. Departures from lower-fee airports (USA, not UK) also reduce costs.',
     },
     {
       question: 'How do I book Aeroplan award flights?',
@@ -283,5 +283,3 @@ export const aeroplanBlogPost: BlogPost = {
     },
   ],
 };
-
-export default aeroplanBlogPost;

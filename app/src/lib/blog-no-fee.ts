@@ -1,186 +1,294 @@
-import { BlogPost } from './blog';
+import { BlogPost } from './types';
 
 export const noFeeBlogPost: BlogPost = {
   slug: 'best-no-annual-fee-credit-cards-canada-2026',
-  title: 'Best No Annual Fee Credit Cards in Canada (2026)',
+  title: 'Best No Annual Fee Credit Cards in Canada for 2026',
   category: 'Best Of',
-  excerpt: 'Discover the best no annual fee credit cards in Canada. Earn rewards without paying yearly fees. Compare top cashback, travel, and student cards.',
-  icon: '💰',
-  image: '/credit_card_images/Simplii Financial Cash Back Visa Card.png',
-  readingTime: '10 min read',
-  publishedDate: '2026-03-11',
+  excerpt: 'Discover the top no annual fee credit cards in Canada for 2026. Earn rewards without paying yearly fees - perfect for beginners and cost-conscious consumers.',
+  icon: '🆓',
+  image: '/credit_card_images/SimplyCash Card from American Express.png',
+  readingTime: '9 min read',
+  publishedDate: '2026-03-10',
+  updatedDate: '2026-03-10',
   keywords: [
-    'no annual fee credit cards Canada',
-    'free credit cards Canada',
-    'best no fee credit cards',
-    'cashback cards no annual fee',
-    'credit cards without yearly fees',
-    'student credit cards no fee',
+    'no annual fee credit cards Canada 2026',
+    'free credit cards',
+    'best no fee cards',
+    'no fee rewards cards',
+    'free credit card comparison',
   ],
   content: `
-    <p>No annual fee credit cards are perfect for anyone who wants to earn rewards without committing to yearly costs. In Canada, there are excellent options that offer cashback, points, and even travel insurance—all for $0 per year. This guide reveals the best no-fee cards and how to maximize their value.</p>
+    <article class="prose prose-lg max-w-none">
+      <p class="lead text-xl text-gray-700 mb-8">
+        Why pay to use a credit card? No annual fee credit cards in Canada offer surprising value—
+        from 2% cash back on groceries to travel insurance, all without costing you a cent.
+        Here's our complete guide to the best free cards for 2026.
+      </p>
 
-    <h2>Who Should Get a No Annual Fee Credit Card?</h2>
-    <p>No annual fee cards are ideal for specific situations:</p>
-    <ul>
-      <li><strong>New credit card users:</strong> Building credit history without costs</li>
-      <li><strong>Occasional users:</strong> If you only use cards occasionally, fees rarely make sense</li>
-      <li><strong>Students:</strong> Limited budgets make fee-free cards essential</li>
-      <li><strong>Debt-conscious consumers:</strong> Pay off balances in full with no extra cost</li>
-      <li><strong>Backup cardholders:</strong> Keep for specific category spending</li>
-    </ul>
+      <div class="bg-gradient-to-r from-green-50 to-emerald-100 rounded-xl p-6 mb-8 border-l-4 border-green-600">
+        <h3 class="text-xl font-bold text-gray-900 mb-3">🎯 Quick Picks for 2026</h3>
+        <ul class="space-y-2 text-gray-700">
+          <li><strong>Best Overall:</strong> SimplyCash Card from Amex (2.5% intro rate, 1.25% after)</li>
+          <li><strong>Best for Groceries:</strong> PC Financial World Elite Mastercard (3% at PC stores)</li>
+          <li><strong>Best for Travel:</strong> Rogers Red World Elite Mastercard (1.5% + no FX fees)</li>
+          <li><strong>Best for Students:</strong> BMO AIR MILES Mastercard (800 bonus miles)</li>
+          <li><strong>Best for Building Credit:</strong> Capital One Guaranteed Mastercard (guaranteed approval)</li>
+        </ul>
+      </div>
 
-    <blockquote>
-      <p><strong>Pro Tip:</strong> Many Canadians keep both a no-fee card for everyday purchases AND a premium card with a fee for specific benefits like lounge access or insurance.</p>
-    </blockquote>
+      <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Why Choose a No Fee Card?</h2>
+      
+      <p class="text-gray-700 mb-4">No fee cards make sense when:</p>
 
-    <h2>Best No Annual Fee Credit Cards in Canada</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="text-3xl mb-3">💰</div>
+          <h4 class="font-bold text-lg mb-2">Cost Conscious</h4>
+          <p class="text-gray-600 text-sm">Don't spend enough to justify annual fees\? A free card keeps more money in your pocket.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="text-3xl mb-3">🌱</div>
+          <h4 class="font-bold text-lg mb-2">Building Credit</h4>
+          <p class="text-gray-600 text-sm">First card or rebuilding credit\? No-fee cards are the safest way to establish history.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="text-3xl mb-3">✈️</div>
+          <h4 class="font-bold text-lg mb-2">Backup Card</h4>
+          <p class="text-gray-600 text-sm">Keep a free card open (even unused) to boost credit age and utilization.</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+          <div class="text-3xl mb-3">🎯</div>
+          <h4 class="font-bold text-lg mb-2">Simple Rewards</h4>
+          <p class="text-gray-600 text-sm">Want straightforward cash back without optimizing categories\? No-fee cards deliver.</p>
+        </div>
+      </div>
 
-    <h3>1. Best for Cash Back: Simplii Financial Cash Back Visa</h3>
-    <p>The <strong>Simplii Financial Cash Back Visa Card</strong> stands out with:</p>
-    <ul>
-      <li><strong>4% cash back</strong> on restaurants, bars, and coffee shops</li>
-      <li><strong>1.5% cash back</strong> on gas, groceries, and recurring bills</li>
-      <li><strong>0.5% cash back</strong> on all other purchases</li>
-      <li>Mobile device insurance (up to $1,000)</li>
-      <li>Purchase security and extended warranty</li>
-    </ul>
-    <p><strong>Who it's best for:</strong> Foodies and anyone who dines out regularly. The 4% restaurant multiplier is unmatched among no-fee cards.</p>
+      <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">The Best No Fee Cards of 2026</h2>
 
-    <h3>2. Best for Grocery Rewards: PC Financial World Elite Mastercard</h3>
-    <p>For shoppers loyal to Loblaws banners, this card is exceptional:</p>
-    <ul>
-      <li><strong>3x PC Optimum points</strong> at Loblaws stores (No Frills, Real Canadian Superstore, etc.)</li>
-      <li><strong>4.5% equivalent</strong> when redeemed strategically</li>
-      <li>1% back on all other purchases</li>
-      <li>Free PC Express grocery pickup</li>
-      <li>${'$'}100,000 minimum income requirement</li>
-    </ul>
-    <p><strong>Who it's best for:</strong> Families spending $500+/month on groceries. The points add up quickly at Loblaws stores.</p>
+      <h3 class="text-xl font-bold text-gray-800 mt-8 mb-4 flex items-center gap-2">
+        <span class="bg-green-100 text-green-700 p-2 rounded-lg text-sm">1</span>
+        SimplyCash Card from American Express
+      </h3>
+      
+      <div class="bg-gray-50 rounded-xl p-6 mb-6">
+        <div class="flex flex-wrap gap-4 mb-4">
+          <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">2.5% Cash Back</span>
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">No Annual Fee</span>
+          <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Amex Offers</span>
+        </div>
+        
+        <p class="text-gray-700 mb-4">
+          The <strong>SimplyCash Card</strong> dominates the no-fee category with its intro 2.5% cash back rate 
+          (on first $500 monthly) and solid 1.25% ongoing rate on everything else.
+        </p>
 
-    <h3>3. Best for Travel: MBNA Alaska Airlines Platinum Plus Mastercard</h3>
-    <p>While officially discontinued for new applications, this card remains a fan favorite for existing holders:</p>
-    <ul>
-      <li>3 miles per $1 on Alaska Airlines purchases</li>
-      <li>1 mile per $1 on everything else</li>
-      <li>Annual companion fare (pay $121 USD for a companion ticket)</li>
-      <li>Preferred boarding and first checked bag free</li>
-    </ul>
-    <p><strong>Current alternative:</strong> Consider the <strong>RBC BA Avios</strong> or accumulating flexible points with no-fee cards and transferring to airline partners.</p>
+        <h4 class="font-semibold mb-2">Key Features:</h4>
+        <ul class="list-disc pl-6 space-y-1 text-gray-700 mb-4">
+          <li><strong>2.5% cash back</strong> in first 3 months (up to $500 spend)\u003c/li>
+          <li><strong>1.25% unlimited</strong> cash back after</li>
+          <li><strong>No annual fee</strong>—ever</li>
+          <li><strong>Amex Front of the Line</strong> for tickets</li>
+          <li><strong>Purchase protection</strong> included</li>
+          <li><strong>Extended warranty</strong> coverage</li>
+        </ul>
 
-    <h3>4. Best for Low Interest: HSBC +Rewards Mastercard</h3>
-    <p>If you occasionally carry a balance, this card prioritizes low rates over rewards:</p>
-    <ul>
-      <li><strong>11.9% purchase interest rate</strong> (vs typical 20%+)</li>
-      <li>Rewards on everything you buy</li>
-      <li>No annual fee</li>
-      <li>Purchase protection and extended warranty</li>
-    </ul>
+        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+          <p class="text-green-800 font-medium">💡 Pro Tip: Stack with Amex Offers</p>
+          <p class="text-green-700 text-sm mt-1">Amex frequently adds extra cash back (5-15%) at popular merchants like Amazon, Starbucks, and fuel stations through Amex Offers.</p>
+        </div>
+      </div>
 
-    <h3>5. Best for Students: BMO CashBack Mastercard for Students</h3>
-    <p>Building credit while earning rewards:</p>
-    <ul>
-      <li><strong>3% cash back</strong> on groceries</li>
-      <li><strong>1% cash back</strong> on recurring bills</li>
-      <li><strong>0.5% cash back</strong> on everything else</li>
-      <li>Free credit score monitoring</li>
-      <li>Extended warranty and purchase protection</li>
-    </ul>
+      <h3 class="text-xl font-bold text-gray-800 mt-8 mb-4 flex items-center gap-2">
+        <span class="bg-green-100 text-green-700 p-2 rounded-lg text-sm">2</span>
+        PC Financial World Elite Mastercard
+      </h3>
+      
+      <div class="bg-gray-50 rounded-xl p-6 mb-6">
+        <p class="text-gray-700 mb-4">
+          Shop at Loblaws banner stores\? This card delivers exceptional value exclusively at PC brands.
+        </p>
 
-    <h2>Comparing Return on Spending</h2>
-    <p>Let's compare value for a typical Canadian spending $2,000/month:</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-white p-4 rounded-lg text-center">
+            <div class="text-2xl font-bold text-green-600">3%</div>
+            <div class="text-sm text-gray-600">PC stores</div>
+          </div>
+          <div class="bg-white p-4 rounded-lg text-center">
+            <div class="text-2xl font-bold text-green-600">1%</div>
+            <div class="text-sm text-gray-600">Everything</div>
+          </div>
+          <div class="bg-white p-4 rounded-lg text-center">
+            <div class="text-2xl font-bold text-green-600">No</div>
+            <div class="text-sm text-gray-600">Annual fee</div>
+          </div>
+        </div>
 
-    <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
-      <thead>
-        <tr style="background: #f3f4f6;">
-          <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">Card</th>
-          <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">Primary Categories</th>
-          <th style="padding: 12px; text-align: right; border: 1px solid #e5e7eb;">Est. Annual Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="padding: 12px; border: 1px solid #e5e7eb;"><strong>Simplii Cash Back</strong></td>
-          <td style="padding: 12px; border: 1px solid #e5e7eb;">4% restaurants, 1.5% gas/groceries</td>
-          <td style="padding: 12px; text-align: right; border: 1px solid #e5e7eb;">${'$'}240-${'$'}480</td>
-        </tr>
-        <tr style="background: #f9fafb;">
-          <td style="padding: 12px; border: 1px solid #e5e7eb;"><strong>PC Financial World Elite</strong></td>
-          <td style="padding: 12px; border: 1px solid #e5e7eb;">3% at Loblaws stores</td>
-          <td style="padding: 12px; text-align: right; border: 1px solid #e5e7eb;">${'$'}180-${'$'}360</td>
-        </tr>
-        <tr>
-          <td style="padding: 12px; border: 1px solid #e5e7eb;"><strong>BMO CashBack</strong></td>
-          <td style="padding: 12px; border: 1px solid #e5e7eb;">3% groceries, 1% bills</td>
-          <td style="padding: 12px; text-align: right; border: 1px solid #e5e7eb;">${'$'}200-${'$'}400</td>
-        </tr>
-      </tbody>
-    </table>
+        <p class="text-gray-700">
+          <strong>Real-world example:</strong> Family spending $800/month at PC stores 
+          = <strong>$288/year</strong> in PC Optimum points. That's worth about $250+ 
+          in free groceries.
+        </p>
 
-    <h2>Hidden Benefits of No-Fee Cards</h2>
-    <p>Don't overlook these valuable perks:</p>
-    <ul>
-      <li><strong>Purchase protection:</strong> Insurance for new purchases (commonly 90 days)</li>
-      <li><strong>Extended warranty:</strong> Doubles manufacturer warranties up to 1 additional year</li>
-      <li><strong>Mobile device insurance:</strong> Covers phone repairs/replacement (up to $1,000)</li>
-      <li><strong>Price protection:</strong> Refunds the difference if prices drop (rare but valuable)</li>
-      <li><strong>Zero liability:</strong> Protection against unauthorized charges</li>
-    </ul>
+        <p class="text-sm text-gray-600 mt-3">
+          <strong>Note:</strong> Requires $100,000+ household income to qualify for World Elite.
+          Regular PC Mastercard has same earn rates but lower insurance coverage.
+        </p>
+      </div>
 
-    <h2>When to Consider a Card WITH an Annual Fee</h2>
-    <p>Sometimes paying a fee makes financial sense:</p>
-    <ul>
-      <li><strong>High spenders:</strong> Cards offering 2-5% earn rates can outpace $0-fee card returns</li>
-      <li><strong>Frequent travelers:</strong> Lounge access, travel insurance, and points transfers</li>
-      <li><strong>Welcome bonus hunters:</strong> Fee cards often offer $500-$1,500+ in sign-up value</li>
-      <li><strong>Business owners:</strong> Higher spending caps and accounting integrations</li>
-    </ul>
-    <p>Use our <a href="/quiz">credit card quiz</a> to determine if a fee card is worth it for your situation.</p>
+      <h3 class="text-xl font-bold text-gray-800 mt-8 mb-4 flex items-center gap-2">
+        <span class="bg-green-100 text-green-700 p-2 rounded-lg text-sm">3</span>
+        Rogers Red World Elite Mastercard
+      </h3>
 
-    <h2>How to Optimize Your No-Fee Strategy</h2>
-    <p>Maximize returns by combining cards strategically:</p>
-    <ol>
-      <li><strong>Use category-specific cards:</strong> One card for groceries, another for restaurants</li>
-      <li><strong>Redeem points optimally:</strong> Save PC Optimum points for bonus redemption events (extra 30-40% value)</li>
-      <li><strong>Set up automatic bill payments:</strong> Earn rewards on recurring bills automatically</li>
-      <li><strong>Track spending:</strong> Use the card with the highest multiplier for each purchase</li>
-      <li><strong>Monitor your credit score:</strong> Multiple cards require more attention to payment dates</li>
-    </ol>
+      <div class="bg-gray-50 rounded-xl p-6 mb-6">
+        <p class="text-gray-700 mb-4">
+          The Rogers Red Mastercard is Canada's best no-fee travel card, with no foreign transaction 
+          fees and solid flat-rate rewards.
+        </p>
 
-    <blockquote>
-      <p><strong>Example Strategy:</strong> Use <strong>PC Financial World Elite</strong> for Loblaws groceries, <strong>Simplii Cash Back</strong> for restaurants, and <strong>Tangerine Money-Back</strong> (another great no-fee option) for selected 2% categories. Combined, this can yield 3-4% average cash back with zero annual fees.</p>
-    </blockquote>
+        <ul class="list-disc pl-6 space-y-2 text-gray-700">
+          <li><strong>1.5% cash back</strong> on everything (unlimited)</li>
+          <li><strong>3% back on US dollars</strong> (Rogers/Fido/Chatr bills)</li>
+          <li><strong>No FX fees</strong>—save 2.5% on every foreign purchase</li>
+          <li>World Elite benefits (concierge, lounge access discounts)</li>
+          <li>Travel medical insurance included</li>
+        </ul>
 
-    <h2>Bottom Line</h2>
-    <p>No annual fee credit cards have come a long way. Cards like the <strong>Simplii Financial Cash Back Visa</strong> and <strong>PC Financial World Elite Mastercard</strong> offer value rivaling fee-based alternatives. For most Canadians, starting with no-fee cards makes sense—upgrade to premium cards only when your spending justifies the annual cost.</p>
-    <p>Use our comparison tool to see personalized recommendations based on your spending habits.</p>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+          <p class="text-blue-800 font-medium">🌍 Why FX Fee Freedom Matters</p>
+          <p class="text-blue-700 text-sm mt-1">Most credit cards charge 2.5% foreign transaction fees. On a $3,000 vacation, that's $75 saved—more than many annual fee cards charge!</p>
+        </div>
+      </div>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">2026 No Fee Credit Card Comparison</h2>
+
+      <div class="overflow-x-auto mb-8">
+        <table class="min-w-full bg-white border border-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Card</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Best Rate</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Categories</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Special Perk</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium">SimplyCash Amex</td>
+              <td class="px-4 py-3 text-sm text-green-700 font-semibold">2.5% (intro)</td>
+              <td class="px-4 py-3 text-sm">Everything</td>
+              <td class="px-4 py-3 text-sm">Amex Offers</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium">PC World Elite</td>
+              <td class="px-4 py-3 text-sm text-green-700 font-semibold">3%</td>
+              <td class="px-4 py-3 text-sm">PC stores</td>
+              <td class="px-4 py-3 text-sm">Grocery rewards</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium">Rogers Red</td>
+              <td class="px-4 py-3 text-sm text-green-700 font-semibold">1.5%</td>
+              <td class="px-4 py-3 text-sm">Everything</td>
+              <td class="px-4 py-3 text-sm">No FX fees</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium">MBNA Smart Cash</td>
+              <td class="px-4 py-3 text-sm text-green-700 font-semibold">5%</td>
+              <td class="px-4 py-3 text-sm">Gas & Grocery*</td>
+              <td class="px-4 py-3 text-sm">High grocery rate</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-3 text-sm font-medium">BMO AIR MILES</td>
+              <td class="px-4 py-3 text-sm text-green-700 font-semibold">1.5%</td>
+              <td class="px-4 py-3 text-sm">Everything</td>
+              <td class="px-4 py-3 text-sm">AIR MILES program</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-sm text-gray-500 mb-6">*MBNA Smart Cash: 5% on first $500/month each, then 1%</p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">When to Upgrade to a Fee Card</h2>
+      
+      <p class="text-gray-700 mb-4">Consider a fee card when your spending justifies the cost:</p>
+
+      <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 my-6">
+        <h4 class="font-bold text-gray-900 mb-3">📊 The Math: Break-Even Analysis</h4>
+        
+        <div class="space-y-3">
+          <div>
+            <p class="font-medium text-gray-700">Spending $1,200/month on groceries:</p>
+            <div class="flex flex-wrap gap-4 mt-2 text-sm">
+              <div class="bg-white px-4 py-2 rounded-lg">
+                <span class="text-gray-500">No-fee card (1.5%): </span>
+                <span class="font-semibold">$216/year</span>
+              </div>
+              <div class="bg-white px-4 py-2 rounded-lg">
+                <span class="text-gray-500">Fee card (4%, $120 fee): </span>
+                <span class="font-semibold text-green-700">$576 - $120 = $456/year</span>
+              </div>
+            </div>
+          </div>
+          
+          <p class="text-green-700 font-medium">✅ Fee card wins by $240/year!</p>
+        </div>
+      </div>
+
+      <p class="text-gray-700">
+        <strong>The rule of thumb:</strong> If you spend $500+/month in bonus categories (groceries, 
+        gas, dining), a $120 annual fee card often pays for itself. Below that threshold, 
+        no-fee cards typically deliver better net value.
+      </p>
+
+      <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Student and First-Time Cardholder Options</h2>
+
+      <p class="text-gray-700 mb-4">
+        Building credit from scratch\? These no-fee cards are designed for you:
+      </p>
+
+      <ul class="list-disc pl-6 space-y-2 text-gray-700 mb-6">
+        <li><strong>BMO AIR MILES Mastercard for Students:</strong> 800 bonus miles on first purchase, no income proof needed</li>
+        <li><strong>Capital One Guaranteed Mastercard:</strong> Guaranteed approval (\$59 security deposit), builds credit fast</li>
+        <li><strong>Tangerine Money-Back:</strong> Choose your own 2% category, great starter card</li>
+      </ul>
+
+      <div class="bg-gradient-to-r from-red-600 to-red-700 rounded-xl p-6 text-white mt-8">
+        <h3 class="text-xl font-bold mb-3">🎯 Find Your Perfect Card</h3>
+        <p class="text-red-100 mb-4">
+          Not sure which no-fee card is right for you\? Take our 2-minute quiz for personalized 
+          recommendations based on your spending patterns.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/quiz" class="inline-block bg-white text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            Take the Quiz →
+          </a>
+          <a href="/" class="inline-block bg-red-800 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-900 transition-colors">
+            Compare All Cards →
+          </a>
+        </div>
+      </div>
+    </article>
   `,
   faqs: [
     {
-      question: 'Are no annual fee credit cards worth it?',
-      answer: 'Yes, no annual fee credit cards can be very worthwhile. Cards like the Simplii Financial Cash Back Visa offer 4% back on restaurants and 1.5% on gas/groceries—excellent rates with zero yearly cost. For moderate spenders, no-fee cards often provide better net value than fee-based alternatives.',
-    },
-    {
-      question: 'What is the best no fee credit card in Canada?',
-      answer: 'The best no fee card depends on your spending. Simplii Financial Cash Back Visa is best for dining (4% back), PC Financial World Elite is best for Loblaws shoppers (3x points), and BMO CashBack is best for students (3% on groceries).',
-    },
-    {
-      question: 'Can I get rewards with a no annual fee credit card?',
-      answer: 'Absolutely! Many no-fee cards offer robust reward programs. The Simplii Financial Cash Back Visa offers up to 4% back, while the PC Financial World Elite earns points equivalent to 3-4.5% at Loblaws stores. Some even include travel insurance and purchase protection.',
-    },
-    {
       question: 'What credit score do I need for a no fee credit card?',
-      answer: 'Most no annual fee cards require a fair to good credit score (650+). However, student cards and secured cards are available with limited or no credit history. Income requirements vary—cards like the PC Financial World Elite require ${'$'}100,000+ household income.',
+      answer: 'Most no annual fee cards require a fair to good credit score (650+). However, student cards and secured cards are available with limited or no credit history. Income requirements vary—cards like the PC Financial World Elite require $100,000+ household income, while basic cards may only need $15,000 annual income.',
     },
     {
       question: 'Should I switch from a fee card to a no fee card?',
-      answer: 'Consider switching if: (1) You don't use the premium benefits (lounge access, travel insurance), (2) Your spending doesn't earn enough to justify the fee, or (3) You want to simplify your wallet. Calculate your net rewards (earnings minus annual fee) to decide.',
+      answer: 'Consider switching if: (1) You\'re not using premium benefits (lounge access, travel credits), (2) Your spending has decreased and you\'re not breaking even on the fee, or (3) You want to simplify your finances. Keep the fee card if the rewards/value exceeds the cost by at least 2x.',
     },
     {
-      question: 'Do no fee cards have travel insurance?',
-      answer: 'Some do! The Simplii Financial Cash Back Visa includes mobile device insurance and purchase protection. While comprehensive travel insurance is rare on no-fee cards, purchase protection and extended warranty are common perks.',
+      question: 'Do no fee cards have insurance?',
+      answer: 'Many no-fee cards include basic insurance: purchase protection (90 days), extended warranty (+1 year), and some include travel medical insurance (Rogers Red). However, fee cards typically have comprehensive coverage including trip cancellation, rental car insurance, and higher limits.',
+    },
+    {
+      question: 'Can I have multiple no fee cards?',
+      answer: 'Yes! Many Canadians use 2-4 no-fee cards strategically: one for groceries (PC), one for everything else (SimplyCash), one for travel (Rogers Red for no FX fees). Just space applications 3-6 months apart and pay all balances in full to maintain good credit.',
+    },
+    {
+      question: 'Will a no fee card hurt my credit score?',
+      answer: 'No—using a no-fee card responsibly helps your credit score. Payment history (30% of score) and credit utilization (30%) matter most. No-fee cards are actually ideal for building credit since there\'s no cost pressure. Just keep utilization under 30% and pay in full monthly.',
     },
   ],
 };
-
-export default noFeeBlogPost;
