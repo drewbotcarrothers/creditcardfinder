@@ -4,6 +4,9 @@ import { aeroplanBlogPost } from './blog-aeroplan';
 import { bestCards2026Post } from './blog-posts-2026';
 import { cashBackBlogPost } from './blog-cashback';
 import { travelBlogPost } from './blog-travel';
+import { studentBlogPost } from './blog-students';
+import { creditScoreBlogPost } from './blog-creditscore';
+import { newcomersBlogPost } from './blog-newcomers';
 
 export interface BlogPost {
   slug: string;
@@ -27,6 +30,9 @@ const blogPosts: BlogPost[] = [
   aeroplanBlogPost,
   cashBackBlogPost,
   travelBlogPost,
+  studentBlogPost,
+  creditScoreBlogPost,
+  newcomersBlogPost,
   {
     slug: 'understanding-credit-scores-canada-2026',
     title: 'Credit Score Requirements 2026: What Score Do You Need?',

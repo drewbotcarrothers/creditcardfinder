@@ -8,11 +8,24 @@ import { aeroplanBlogPost } from './blog-aeroplan';
 import { bestCards2026Post } from './blog-posts-2026';
 import { cashBackBlogPost } from './blog-cashback';
 import { travelBlogPost } from './blog-travel';
+import { studentBlogPost } from './blog-students';
+import { creditScoreBlogPost } from './blog-creditscore';
+import { newcomersBlogPost } from './blog-newcomers';
 import { getBlogPosts as getOriginalBlogPosts, getBlogPostBySlug as getOriginalBlogPostBySlug } from './blog';
 import { BlogPost } from './blog';
 
 // Re-export the blog posts
-export { noFeeBlogPost, businessBlogPost, aeroplanBlogPost, bestCards2026Post, cashBackBlogPost, travelBlogPost };
+export { 
+  noFeeBlogPost, 
+  businessBlogPost, 
+  aeroplanBlogPost, 
+  bestCards2026Post, 
+  cashBackBlogPost, 
+  travelBlogPost,
+  studentBlogPost,
+  creditScoreBlogPost,
+  newcomersBlogPost
+};
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
   const existingPosts = await getOriginalBlogPosts();
@@ -24,6 +37,9 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
     bestCards2026Post,
     cashBackBlogPost,
     travelBlogPost,
+    studentBlogPost,
+    creditScoreBlogPost,
+    newcomersBlogPost,
   ];
 }
 
@@ -31,6 +47,6 @@ export async function getBlogPostBySlugFromAll(slug: string): Promise<BlogPost |
   const existingPost = await getOriginalBlogPostBySlug(slug);
   if (existingPost) return existingPost;
   
-  const newPosts = [noFeeBlogPost, businessBlogPost, aeroplanBlogPost, bestCards2026Post, cashBackBlogPost, travelBlogPost];
+  const newPosts = [noFeeBlogPost, businessBlogPost, aeroplanBlogPost, bestCards2026Post, cashBackBlogPost, travelBlogPost, studentBlogPost, creditScoreBlogPost, newcomersBlogPost];
   return newPosts.find((post) => post.slug === slug) || null;
 }
