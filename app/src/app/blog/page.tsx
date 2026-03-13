@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getBlogPosts } from '@/lib/blog';
+import { getAllBlogPosts } from '@/lib/blog';
 import StructuredData from '@/components/StructuredData';
 
 export const metadata: Metadata = {

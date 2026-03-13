@@ -839,3 +839,5 @@ export async function getRelatedBlogPosts(currentSlug: string, limit = 3): Promi
     .filter((post) => post.slug !== currentSlug)
     .slice(0, limit);
 }
+e x p o r t   c o n s t   g e t A l l B l o g P o s t s   =   g e t B l o g P o s t s ;  
+ 
