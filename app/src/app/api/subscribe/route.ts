@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       source: source || 'unknown',
       subscribedAt: new Date().toISOString(),
       userAgent: request.headers.get('user-agent') || 'unknown',
-      ip: request.ip || 'unknown',
+      ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
     };
 
     // Here you would typically:
