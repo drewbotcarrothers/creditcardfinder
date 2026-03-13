@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getCards } from '@/lib/data';
 
+// Static export compatibility
+export const dynamic = 'force-static';
+export const revalidate = 3600;
+
 export async function GET() {
   try {
     const cards = await getCards();
@@ -13,6 +17,3 @@ export async function GET() {
     );
   }
 }
-
-// Revalidate every hour
-export const revalidate = 3600;

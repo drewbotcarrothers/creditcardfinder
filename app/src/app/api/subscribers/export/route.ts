@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Static export compatibility
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 // This would need proper authentication in production
 // For now, requiring a secret token in the query string
 
