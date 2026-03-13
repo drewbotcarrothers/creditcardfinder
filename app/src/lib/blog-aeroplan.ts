@@ -267,7 +267,7 @@ export const aeroplanBlogPost: BlogPost = {
     },
     {
       question: 'Do Aeroplan points expire?',
-      answer: 'Aeroplan points expire after 18 months of inactivity. Any earning, redemption, or transfer resets the clock. Having an Aeroplan credit card or Elite status prevents expiration entirely. Set calendar reminders to make small purchases through the eStore if you're not active to keep points alive.',
+      answer: 'Aeroplan points expire after 18 months of inactivity. Any earning, redemption, or transfer resets the clock. Having an Aeroplan credit card or Elite status prevents expiration entirely. Set calendar reminders to make small purchases through the eStore if you\'re not active to keep points alive.',
     },
     {
       question: 'Can I transfer points from other programs to Aeroplan?',
