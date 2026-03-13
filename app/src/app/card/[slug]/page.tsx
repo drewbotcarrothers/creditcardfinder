@@ -123,7 +123,7 @@ export default async function CardPage({ params }: CardPageProps) {
           "@context": "https://schema.org",
           "@type": "Product",
           name: card.creditCardName,
-          description: `${card.creditCardName} by ${card.issuer}. ${card.introductoryOffer || ''} ${card.welcomeBonus || ''}`,
+          description: `${card.creditCardName} by ${card.issuer}. ${card.welcomeBonus || ''} ${card.rewardsProgram || ''} credit card.`,
           brand: {
             "@type": "Brand",
             name: card.issuer,
@@ -165,11 +165,6 @@ export default async function CardPage({ params }: CardPageProps) {
               <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
                 {card.issuer}
               </span>
-              {card.cardType && (
-                <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
-                  {card.cardType}
-                </span>
-              )}
             </div>
 
             {/* Card Name */}
@@ -180,7 +175,7 @@ export default async function CardPage({ params }: CardPageProps) {
             {/* Promo Text + Learn More */}
             <div className="space-y-2">
               <p className="text-lg text-gray-700 leading-relaxed">
-                {card.introductoryOffer}
+                {card.welcomeBonus}
               </p>
               
               <Link
