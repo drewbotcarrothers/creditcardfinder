@@ -87,7 +87,7 @@ function generateCardFAQ(card: CreditCard) {
     },
     {
       question: `Is the ${card.creditCardName} worth it?`,
-      answer: `The ${card.creditCardName} is ${card.annualFee === '$0' ? 'a great no-annual-fee option' : 'worth considering if you can maximize its rewards'}. ${card.welcomeBonus ? `The welcome bonus of ${card.welcomeBonus} adds significant value.` : ''} ${card.rewardsProgram ? `The ${card.rewardsProgram} program offers flexibility for redemptions.` : ''}`,
+      answer: `The ${card.creditCardName} is ${card.annualFee === 0 ? 'a great no-annual-fee option' : 'worth considering if you can maximize its rewards'}. ${card.welcomeBonus ? `The welcome bonus of ${card.welcomeBonus} adds significant value.` : ''} ${card.rewardsProgram ? `The ${card.rewardsProgram} program offers flexibility for redemptions.` : ''}`,
     },
   ];
 }
@@ -120,323 +120,275 @@ export default async function CardPage({ params }: CardPageProps) {
       <StructuredData 
         type="Product"
         data={{
+          "@context": "https://schema.org",
+          "@type": "Product",
           name: card.creditCardName,
-          image: `https://canadiancreditcardfinder.com/credit_card_images/${card.imageFile}`,
-          description: `${card.creditCardName} by ${card.issuer}. ${card.annualFeeDisplay} annual fee. ${card.welcomeBonus || 'Earn rewards'}. ${card.rewardsProgram}.`,
+          description: `${card.creditCardName} by ${card.issuer}. ${card.introductoryOffer || ''} ${card.welcomeBonus || ''}`,
           brand: {
-            '@type': 'Brand',
+            "@type": "Brand",
             name: card.issuer,
           },
           category: card.category,
           offers: {
-            '@type': 'Offer',
-            price: String(card.annualFee).replace(/[$,]/g, ''),
-            priceCurrency: 'CAD',
-            availability: 'https://schema.org/InStock',
-            url: card.productLink,
-            priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-            seller: {
-              '@type': 'Organization',
-              name: card.issuer,
-            },
+            "@type": "Offer",
+            description: card.annualFeeDisplay,
+            priceCurrency: "CAD",
+            availability: "https://schema.org/InStock",
+            url: `https://canadiancreditcardfinder.com/card/${card.slug}`,
           },
-          additionalProperty: featuresList.slice(0, 5).map(feature => ({
-            '@type': 'PropertyValue',
-            name: 'Card Feature',
-            value: feature,
-          })),
-          review: {
-            '@type': 'Review',
-            reviewRating: {
-              '@type': 'Rating',
-              ratingValue: '5',
-              bestRating: '5',
-            },
-            author: {
-              '@type': 'Organization',
-              name: 'Canadian Credit Card Finder',
-            },
-            reviewBody: `${card.creditCardName} is ${card.category === 'Travel' ? 'an excellent choice for frequent travelers' : card.category === 'Cash Back' ? 'a solid cash back option' : 'worth considering based on your spending habits'}. ${card.annualFee === '$0' ? 'With no annual fee, it offers great value.' : `The ${card.annualFeeDisplay} annual fee is offset by the rewards potential.`}`,
-          },
-        }}
-      />
-      
-      <StructuredData 
-        type="FAQPage"
-        data={{
-          mainEntity: faqs.map(faq => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: faq.answer,
-            },
-          })),
+          ...(schemaFeatures.length > 0 && {
+            featureList: schemaFeatures.join(", "),
+          }),
         }}
       />
 
-      <div className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-8 sm:py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Breadcrumb */}
-            <nav className="text-gray-400 mb-4 sm:mb-8 text-xs sm:text-sm">
-              <Link href="/" className="hover:text-white">Home</Link>
+      <main className="min-h-screen bg-gray-50">
+        {/* Breadcrumb */}
+        <div className="bg-white border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav className="flex text-sm text-gray-600">
+              <Link href="/" className="hover:text-red-600 transition-colors">Home</Link>
               <span className="mx-2">/</span>
-              <Link href={`/?category=${encodeURIComponent(card.category)}`} className="hover:text-white">{card.category}</Link>
-              <span className="mx-2">/</span>
-              <span className="text-white truncate">{card.creditCardName}</span>
+              <span className="text-gray-900 font-medium">{card.creditCardName}</span>
             </nav>
+          </div>
+        </div>
 
-            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
-              {/* Card Image */}
-              <div className="relative w-full max-w-xs sm:max-w-sm lg:max-w-md aspect-[1.58/1] bg-white rounded-xl overflow-hidden shadow-xl mx-auto lg:mx-0">
-                <Image
-                  src={`/credit_card_images/${card.imageFile}`}
-                  alt={card.creditCardName}
-                  fill
-                  className="object-contain p-4 sm:p-6"
-                  priority
-                />
+        {/* Header Section */}
+        <section className="bg-white border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* Top: Category + Tags */}
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">
+                {card.category}
+              </span>
+              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                {card.issuer}
+              </span>
+              {card.cardType && (
+                <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">
+                  {card.cardType}
+                </span>
+              )}
+            </div>
+
+            {/* Card Name */}
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+              {card.creditCardName}
+            </h1>
+
+            {/* Promo Text + Learn More */}
+            <div className="space-y-2">
+              <p className="text-lg text-gray-700 leading-relaxed">
+                {card.introductoryOffer}
+              </p>
+              
+              <Link
+                href={`https://www.google.com/search?q=${encodeURIComponent(card.creditCardName + ' Canada')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-red-600 hover:text-red-700 font-medium group"
+              >
+                Learn more
+                <svg 
+                  className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Main Content Grid */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            {/* Left Column - Card Image & CTA */}
+            <div className="lg:col-span-1">
+              <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                {/* Card Image */}
+                <div className="relative aspect-[16/10] mb-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
+                  <Image
+                    src={`/credit_card_images/${card.imageFile}`}
+                    alt={card.creditCardName}
+                    fill
+                    className="object-contain p-4"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    priority
+                  />
+                </div>
+
+                {/* Key Highlights */}
+                <div className="space-y-4 mb-6">
+                  <div className="text-center p-4 bg-red-50 rounded-xl">
+                    <div className="text-3xl font-bold text-red-600">${card.annualFee}</div>
+                    <div className="text-sm text-gray-600">Annual Fee</div>
+                  </div>
+                  
+                  {card.welcomeBonus && (
+                    <div className="text-center p-4 bg-green-50 rounded-xl">
+                      <div className="text-lg font-bold text-green-700">{card.welcomeBonus}</div>
+                      <div className="text-sm text-gray-600">Welcome Bonus</div>
+                    </div>
+                  )}
+                </div>
+
+                {/* CTA Button */}
+                <Link
+                  href="#"
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-xl text-center transition-colors flex items-center justify-center gap-2"
+                >
+                  Apply Now
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </Link>
+                
+                <p className="text-xs text-gray-500 text-center mt-3">
+                  Terms and conditions apply. Subject to credit approval.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column - Details */}
+            <div className="lg:col-span-2 space-y-6">
+              
+              {/* Quick Stats */}
+              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Card Details</h2>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center shrink-0">
+                      <span className="text-red-600 text-lg">💰</span>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">Annual Fee</div>
+                      <div className="text-gray-600">{card.annualFeeDisplay}</div>
+                      {card.annualFeeDetail && (
+                        <div className="text-sm text-gray-500">{card.annualFeeDetail}</div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
+                      <span className="text-blue-600 text-lg">💳</span>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">Interest Rate</div>
+                      <div className="text-gray-600">{card.purchaseInterestRateDisplay}</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
+                      <span className="text-green-600 text-lg">🎁</span>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">Rewards</div>
+                      <div className="text-gray-600">{card.rewardsProgram}</div>
+                    </div>
+                  </div>
+
+                  {card.additionalCardFee !== undefined && (
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center shrink-0">
+                        <span className="text-purple-600 text-lg">👨‍👩‍👧‍👦</span>
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-900">Additional Cards</div>
+                        <div className="text-gray-600">{card.additionalCardFee === 0 ? 'Free' : `$${card.additionalCardFee}`}</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
-              {/* Card Info */}
-              <div className="flex-1 w-full">
-                <div className="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
-                  <span className="bg-red-600 text-white text-xs font-bold px-2.5 py-1 rounded">
-                    {card.category}
-                  </span>
-                  <span className="bg-gray-700 text-white text-xs font-bold px-2.5 py-1 rounded">
-                    {card.rewardsProgram}
-                  </span>
+              {/* Features */}
+              {featuresList.length > 0 && (
+                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4">Key Features</h2>
+                  <ul className="space-y-3">
+                    {featuresList.map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <svg className="w-5 h-5 text-green-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-4">{card.creditCardName}</h1>
-                <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-2">by {card.issuer}</p>
-                
-                {card.welcomeBonus && (
-                  <div className="bg-gradient-to-r from-red-600 to-red-500 rounded-xl p-3 sm:p-4 mb-4 sm:mb-6">
-                    <p className="text-xs sm:text-sm text-red-100 uppercase font-semibold">Welcome Bonus</p>
-                    <p className="text-xl sm:text-2xl font-bold text-white">{card.welcomeBonus}</p>
-                    <p className="text-xs sm:text-sm text-red-100">{card.welcomeBonusValue || 'See details below'}</p>
-                  </div>
-                )}
+              )}
 
-                {/* Desktop CTAs */}
-                <div className="hidden sm:flex flex-wrap gap-3 sm:gap-4">
-                  <a
-                    href={card.productLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-red-600 hover:bg-red-700 text-white px-6 sm:px-8 py-3 rounded-xl font-semibold transition-colors text-center min-h-[48px] flex items-center touch-manipulation"
-                  >
-                    Apply Now
-                  </a>
-                  <Link
-                    href="/compare"
-                    className="bg-gray-700 hover:bg-gray-600 text-white px-4 sm:px-6 py-3 rounded-xl font-semibold transition-colors text-center min-h-[48px] flex items-center touch-manipulation"
-                  >
-                    Compare Cards
-                  </Link>
+              {/* Insurance */}
+              {insuranceList.length > 0 && (
+                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-900 mb-4">Insurance Coverage</h2>
+                  <ul className="space-y-3">
+                    {insuranceList.map((item, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <svg className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-gray-700">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* FAQ */}
+              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+                <div className="space-y-4">
+                  {faqs.map((faq, index) => (
+                    <div key={index} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
+                      <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
+                      <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Mobile Sticky CTA */}
-        <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 p-4 shadow-lg">
-          <div className="flex gap-3">
-            <a
-              href={card.productLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3.5 rounded-xl font-semibold transition-colors text-center min-h-[48px] flex items-center justify-center touch-manipulation"
-            >
-              Apply Now
-            </a>
-            <Link
-              href="/compare"
-              className="px-5 py-3.5 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold transition-colors min-h-[48px] flex items-center justify-center touch-manipulation"
-            >
-              Compare
-            </Link>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 pb-24 sm:pb-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Left Column - Details */}
-            <div className="lg:col-span-2 space-y-4 sm:space-y-8">
-              {/* Key Details Grid */}
-              <section className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-                <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Card Details</h2>
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
-                    <p className="text-xs sm:text-sm text-gray-600 mb-1">Annual Fee</p>
-                    <p className="text-xl sm:text-2xl font-bold text-gray-900">{card.annualFeeDisplay}</p>
-                    {card.annualFeeDetail && (
-                      <p className="text-xs text-gray-500 mt-1">{card.annualFeeDetail}</p>
-                    )}
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
-                    <p className="text-xs sm:text-sm text-gray-600 mb-1">Interest Rate</p>
-                    <p className="text-xl sm:text-2xl font-bold text-gray-900">{card.purchaseInterestRateDisplay}</p>
-                    <p className="text-xs text-gray-500 mt-1">Purchase APR</p>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
-                    <p className="text-xs sm:text-sm text-gray-600 mb-1">Cash Advance</p>
-                    <p className="text-xl sm:text-2xl font-bold text-gray-900">{card.cashAdvanceInterestRateDisplay}</p>
-                  </div>
-                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
-                    <p className="text-xs sm:text-sm text-gray-600 mb-1">Additional Card</p>
-                    <p className="text-xl sm:text-2xl font-bold text-gray-900">{card.additionalCardFeeDisplay}</p>
-                    {card.additionalCardFeeDetail && (
-                      <p className="text-xs text-gray-500 mt-1">{card.additionalCardFeeDetail}</p>
-                    )}
-                  </div>
-                </div>
-              </section>
-
-              {/* Features */}
-              {featuresList.length > 0 && (
-                <section className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-                  <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Card Features</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {featuresList.map((feature, index) => (
-                      <div key={index} className="flex items-start gap-2 py-1.5">
-                        <svg className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-sm sm:text-base text-gray-700">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  {card.featuresDetailed && (
-                    <p className="mt-4 text-gray-600 text-sm sm:text-base">{card.featuresDetailed}</p>
-                  )}
-                </section>
-              )}
-
-              {/* Insurance */}
-              {insuranceList.length > 0 && (
-                <section className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-                  <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Insurance Coverage</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {insuranceList.map((item, index) => (
-                      <div key={index} className="flex items-start gap-2 py-1.5">
-                        <svg className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                        <span className="text-sm sm:text-base text-gray-700">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              )}
-
-              {/* Eligibility */}
-              {card.cardEligibility && (
-                <section className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-                  <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Eligibility Requirements</h2>
-                  <p className="text-sm sm:text-base text-gray-700">{card.cardEligibility}</p>
-                </section>
-              )}
-
-              {/* FAQ Section */}
-              <section className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-                <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6">Frequently Asked Questions</h2>
-                <div className="space-y-4">
-                  {faqs.map((faq, index) => (
-                    <div key={index} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
-                      <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">{faq.question}</h3>
-                      <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">{faq.answer}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </div>
-
-            {/* Right Column - Sidebar */}
-            <div className="space-y-4 sm:space-y-6">
-              {/* Quick Facts */}
-              <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 sm:sticky sm:top-24">
-                <h3 className="font-bold mb-3 sm:mb-4 text-base sm:text-lg">Quick Facts</h3>
-                <div className="space-y-2 sm:space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Category:</span>
-                    <span className="font-medium text-right">{card.category}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Issuer:</span>
-                    <span className="font-medium text-right">{card.issuer}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-500">Rewards:</span>
-                    <span className="font-medium text-right">{card.rewardsProgram}</span>
-                  </div>
-                </div>
-
-                <div className="mt-5 sm:mt-6 space-y-2 sm:space-y-3">
-                  <a
-                    href={card.productLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-3 rounded-xl font-semibold transition-colors min-h-[44px] flex items-center justify-center touch-manipulation"
-                  >
-                    Apply Now
-                  </a>
-                  <Link
-                    href="/"
-                    className="block w-full border-2 border-gray-300 hover:border-gray-400 text-gray-700 text-center py-2.5 rounded-xl font-medium transition-colors min-h-[44px] flex items-center justify-center touch-manipulation"
-                  >
-                    View All Cards
-                  </Link>
-                </div>
-
-                {/* Internal Links */}
-                <div className="mt-6 pt-6 border-t border-gray-100">
-                  <CardInternalLinks 
-                    category={card.category}
-                    issuer={card.issuer}
-                    rewardsProgram={card.rewardsProgram}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Related Cards */}
-          {relatedCards.length > 0 && (
-            <section className="mt-8 sm:mt-12">
-              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Similar Cards You May Like</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {/* Related Cards */}
+        {relatedCards.length > 0 && (
+          <section className="bg-white border-t border-gray-200 py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Similar Cards You Might Like</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {relatedCards.map((relatedCard) => (
                   <Link
-                    key={relatedCard.id}
+                    key={relatedCard.slug}
                     href={`/card/${relatedCard.slug}`}
-                    className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                    className="bg-gray-50 rounded-xl p-4 hover:shadow-md transition-shadow"
                   >
-                    <div className="relative aspect-[1.58/1] bg-gray-100">
+                    <div className="aspect-[16/10] relative mb-3 bg-white rounded-lg overflow-hidden">
                       <Image
                         src={`/credit_card_images/${relatedCard.imageFile}`}
                         alt={relatedCard.creditCardName}
                         fill
-                        className="object-contain p-3 sm:p-4"
+                        className="object-contain p-2"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
                     </div>
-                    <div className="p-3 sm:p-4">
-                      <h3 className="font-semibold text-gray-900 text-sm sm:text-base leading-tight mb-1 line-clamp-2">{relatedCard.creditCardName}</h3>
-                      <p className="text-sm text-gray-500">{relatedCard.annualFeeDisplay}</p>
-                    </div>
+                    <h3 className="font-semibold text-gray-900 text-sm line-clamp-2">{relatedCard.creditCardName}</h3>
+                    <p className="text-red-600 font-medium text-sm mt-1">{relatedCard.annualFeeDisplay}</p>
                   </Link>
                 ))}
               </div>
-            </section>
-          )}
-        </div>
-      </div>
+            </div>
+          </section>
+        )}
+      </main>
     </>
   );
 }
