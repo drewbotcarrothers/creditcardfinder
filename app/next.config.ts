@@ -27,14 +27,8 @@ const nextConfig: NextConfig = {
     ],
   },
   
-  // Headers for caching (only works with server, not static export)
-  // For static export, use _headers file or CDN config
-  
   // Build optimizations
   eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
     ignoreDuringBuilds: true,
   },
   
