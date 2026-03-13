@@ -1,4 +1,4 @@
-import { BlogPost } from './types';
+import { BlogPost } from './blog';
 
 export const noFeeBlogPost: BlogPost = {
   slug: 'best-no-annual-fee-credit-cards-canada-2026',
