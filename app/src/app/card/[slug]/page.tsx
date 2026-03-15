@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: CardPageProps): Promise<Metad
     };
   }
 
-  const title = `${card.creditCardName} - ${card.welcomeBonus || 'Review & Details'} | Canadian Credit Card Finder`;
-  const description = `Compare ${card.creditCardName} by ${card.issuer}. ${card.annualFeeDisplay} annual fee. ${card.welcomeBonus || 'Earn rewards'} with ${card.rewardsProgram}. See full details, benefits, and apply.`;
+  const title = `${card.creditCardName} (${card.issuer}) - ${card.welcomeBonus || 'Review & Details'} | Canadian Credit Card Finder`;
+  const description = `${card.creditCardName} by ${card.issuer} - ${card.annualFeeDisplay} annual fee. ${card.welcomeBonus || 'Earn rewards'} with ${card.rewardsProgram}. ${card.features ? 'Features: ' + card.features.split(',').slice(0, 3).join(', ') + '.' : ''} Compare and apply online.`;
 
   return {
     title,
@@ -43,26 +43,39 @@ export async function generateMetadata({ params }: CardPageProps): Promise<Metad
       'compare credit cards',
       `${card.issuer} credit card`,
       `${card.category} credit card Canada`,
+      `${card.creditCardName} review`,
+      `${card.creditCardName} benefits`,
+      `${card.creditCardName} apply`,
+      'best credit cards Canada',
+      'credit card comparison',
     ],
     openGraph: {
       title,
       description: description.slice(0, 160),
       type: 'article',
       locale: 'en_CA',
+      siteName: 'Canadian Credit Card Finder',
       images: [{
         url: `https://canadiancreditcardfinder.com/credit_card_images/${card.imageFile}`,
         width: 800,
         height: 506,
-        alt: card.creditCardName,
+        alt: `${card.creditCardName} - ${card.issuer} Credit Card`,
       }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description: description.slice(0, 160),
+      images: [`https://canadiancreditcardfinder.com/credit_card_images/${card.imageFile}`],
     },
     alternates: {
       canonical: `https://canadiancreditcardfinder.com/card/${card.slug}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   };
 }
@@ -171,9 +184,54 @@ export default async function CardPage({ params }: CardPageProps) {
     { name: card.creditCardName, item: `https://canadiancreditcardfinder.com/card/${card.slug}` },
   ];
 
+  // FAQPage structured data
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map(faq => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
+  // Article structured data for the review
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `${card.creditCardName} Review - ${card.issuer}`,
+    description: `Comprehensive review of the ${card.creditCardName} including features, rewards, fees, and eligibility requirements.`,
+    image: `https://canadiancreditcardfinder.com/credit_card_images/${card.imageFile}`,
+    author: {
+      "@type": "Organization",
+      name: "Canadian Credit Card Finder",
+      url: "https://canadiancreditcardfinder.com",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Canadian Credit Card Finder",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://canadiancreditcardfinder.com/logo.png",
+      },
+    },
+    datePublished: new Date().toISOString(),
+    dateModified: new Date().toISOString(),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://canadiancreditcardfinder.com/card/${card.slug}`,
+    },
+  };
+
   return (
     <>
       <BreadcrumbSchema items={breadcrumbItems} />
+      
+      <StructuredData type="FAQPage" data={faqSchema} />
+      <StructuredData type="Article" data={articleSchema} />
       
       <StructuredData 
         type="Product"
@@ -238,6 +296,35 @@ export default async function CardPage({ params }: CardPageProps) {
           </div>
         </section>
 
+        {/* Table of Contents */}
+        <section className="bg-white border-b border-gray-200 py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap items-center gap-2 text-sm">
+              <span className="font-semibold text-gray-700 mr-2">Quick Links:</span>
+              {[
+                { label: 'Overview', href: '#overview' },
+                { label: 'Welcome Bonus', href: '#welcome-bonus' },
+                { label: 'Features', href: '#features' },
+                { label: 'Rewards', href: '#rewards' },
+                { label: 'Insurance', href: '#insurance' },
+                { label: 'Eligibility', href: '#eligibility' },
+                { label: 'Suitability', href: '#suitability' },
+                { label: 'Pros & Cons', href: '#pros-cons' },
+                { label: 'Verdict', href: '#verdict' },
+                { label: 'FAQ', href: '#faq' },
+              ].map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="px-3 py-1 bg-gray-100 hover:bg-red-100 text-gray-700 hover:text-red-700 rounded-full transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Main Content Grid */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -249,7 +336,7 @@ export default async function CardPage({ params }: CardPageProps) {
                 <div className="relative aspect-[16/10] mb-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
                   <Image
                     src={`/credit_card_images/${card.imageFile}`}
-                    alt={card.creditCardName}
+                    alt={`${card.creditCardName} by ${card.issuer} - ${card.category} credit card with ${card.annualFeeDisplay} annual fee`}
                     fill
                     className="object-contain p-4"
                     sizes="(max-width: 768px) 100vw, 400px"
@@ -303,7 +390,7 @@ export default async function CardPage({ params }: CardPageProps) {
             <div className="lg:col-span-2 space-y-6">
               
               {/* 1. Card Overview */}
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+              <div id="overview" className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 scroll-mt-24">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <span className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center text-red-600 text-lg">📋</span>
                   Card Overview
@@ -359,7 +446,7 @@ export default async function CardPage({ params }: CardPageProps) {
 
               {/* 2. Welcome Bonus & Eligibility */}
               {(card.welcomeBonusDetailed || card.welcomeBonusEligibility) && (
-                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+                <div id="welcome-bonus" className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 scroll-mt-24">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <span className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center text-green-600 text-lg">🎁</span>
                     Welcome Bonus & Eligibility
@@ -388,7 +475,7 @@ export default async function CardPage({ params }: CardPageProps) {
 
               {/* 3. Key Card Features */}
               {features.main.length > 0 && (
-                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+                <div id="features" className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 scroll-mt-24">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <span className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 text-lg">✨</span>
                     Key Card Features
@@ -407,7 +494,7 @@ export default async function CardPage({ params }: CardPageProps) {
               )}
 
               {/* 4. Rewards */}
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+              <div id="rewards" className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 scroll-mt-24">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <span className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-600 text-lg">🏆</span>
                   Rewards Program
@@ -435,7 +522,7 @@ export default async function CardPage({ params }: CardPageProps) {
 
               {/* 5. Insurance Coverage */}
               {insuranceList.length > 0 && (
-                <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+                <div id="insurance" className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 scroll-mt-24">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <span className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 text-lg">🛡️</span>
                     Insurance Coverage
@@ -454,7 +541,7 @@ export default async function CardPage({ params }: CardPageProps) {
               )}
 
               {/* 6. Who Can Apply? */}
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+              <div id="eligibility" className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 scroll-mt-24">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <span className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 text-lg">👤</span>
                   Who Can Apply?
@@ -503,7 +590,7 @@ export default async function CardPage({ params }: CardPageProps) {
               </div>
 
               {/* 7. Is This Card Right For You? */}
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+              <div id="suitability" className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 scroll-mt-24">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <span className="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center text-pink-600 text-lg">🤔</span>
                   Is This Card Right For You?
@@ -561,7 +648,7 @@ export default async function CardPage({ params }: CardPageProps) {
               </div>
 
               {/* 8. Pros & Cons */}
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+              <div id="pros-cons" className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 scroll-mt-24">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <span className="w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 text-lg">⚖️</span>
                   Pros & Cons
@@ -607,7 +694,7 @@ export default async function CardPage({ params }: CardPageProps) {
               </div>
 
               {/* 9. Our Verdict */}
-              <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl shadow-lg p-6 text-white">
+              <div id="verdict" className="bg-gradient-to-br from-red-600 to-red-700 rounded-2xl shadow-lg p-6 text-white scroll-mt-24">
                 <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
                   <span className="text-2xl">🏆</span>
                   Our Verdict
@@ -629,7 +716,7 @@ export default async function CardPage({ params }: CardPageProps) {
               </div>
 
               {/* FAQ */}
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
+              <div id="faq" className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 scroll-mt-24">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <span className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 text-lg">❓</span>
                   Frequently Asked Questions
@@ -662,7 +749,7 @@ export default async function CardPage({ params }: CardPageProps) {
                     <div className="aspect-[16/10] relative mb-3 bg-white rounded-lg overflow-hidden">
                       <Image
                         src={`/credit_card_images/${relatedCard.imageFile}`}
-                        alt={relatedCard.creditCardName}
+                        alt={`${relatedCard.creditCardName} - ${relatedCard.issuer} ${relatedCard.category} credit card`}
                         fill
                         className="object-contain p-2"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
