@@ -6,7 +6,7 @@ export const noFeeBlogPost: BlogPost = {
   category: 'Best Of',
   excerpt: 'Discover the top no annual fee credit cards in Canada for 2026. Earn rewards without paying yearly fees - perfect for beginners and cost-conscious consumers.',
   icon: '🆓',
-  image: '/credit_card_images/SimplyCash Card from American Express.png',
+  image: '/credit_card_images/American Express Gold Rewards Card.png',
   readingTime: '9 min read',
   publishedDate: '2026-03-10',
   updatedDate: '2026-03-10',

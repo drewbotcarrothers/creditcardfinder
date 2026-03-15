@@ -6,7 +6,7 @@ export const newcomersBlogPost: BlogPost = {
   category: 'Newcomers',
   excerpt: 'New to Canada? Learn how to get your first credit card with no Canadian credit history. Compare newcomer-friendly cards, build credit fast, and avoid common mistakes.',
   icon: '🍁',
-  image: '/credit_card_images/Scotiabank SCENE Visa.png',
+  image: '/credit_card_images/Scotiabank Scene+ Visa Card.png',
   readingTime: '11 min read',
   publishedDate: '2026-03-13',
   keywords: [

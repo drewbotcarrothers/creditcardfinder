@@ -6,7 +6,7 @@ export const travelBlogPost: BlogPost = {
   category: 'Best Of',
   excerpt: 'Compare the top travel credit cards for Canadians. Earn points for flights, hotels, and vacations. Expert picks for Aeroplan, Aventura, and all travel rewards programs.',
   icon: '✈️',
-  image: '/credit_card_images/TD Aeroplan Visa Infinite.png',
+  image: '/credit_card_images/TD Aeroplan Visa Infinite Card.png',
   readingTime: '13 min read',
   publishedDate: '2026-03-12',
   keywords: [

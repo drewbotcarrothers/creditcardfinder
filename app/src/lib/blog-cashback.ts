@@ -6,7 +6,7 @@ export const cashBackBlogPost: BlogPost = {
   category: 'Best Of',
   excerpt: 'Compare the highest cash back credit cards in Canada for 2026. Find the right card for groceries, gas, and everyday spending. Expert picks for maximum returns.',
   icon: '💵',
-  image: '/credit_card_images/Simplii Financial Cash Back Visa.png',
+  image: '/credit_card_images/MBNA Smart Cash World Mastercard.png',
   readingTime: '11 min read',
   publishedDate: '2026-03-12',
   keywords: [

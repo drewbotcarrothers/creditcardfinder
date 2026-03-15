@@ -6,7 +6,7 @@ export const businessBlogPost: BlogPost = {
   category: 'Business',
   excerpt: 'Compare the best business credit cards in Canada. Earn rewards on business expenses, build business credit, and access exclusive perks. From startup to established business.',
   icon: '💼',
-  image: '/credit_card_images/American Express Business Gold Rewards Card.png',
+  image: '/credit_card_images/American Express Gold Rewards Card.png',
   readingTime: '12 min read',
   publishedDate: '2026-03-11',
   keywords: [
