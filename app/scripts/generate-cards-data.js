@@ -53,18 +53,37 @@ async function generateCardsData() {
       slug: slugify(row.Credit_Card_Name || ''),
     }));
 
-    // Write to public folder as JSON
+    // Generate TypeScript file that can be imported
+    const tsContent = `// Auto-generated from CSV at build time
+// Do not edit manually
+
+import { CreditCard } from './types';
+
+export const staticCards: CreditCard[] = ${JSON.stringify(cards, null, 2)};
+
+export function getStaticCards(): CreditCard[] {
+  return staticCards;
+}
+`;
+
+    // Write to lib folder as TypeScript
+    const libDir = path.join(__dirname, '../src/lib');
+    fs.writeFileSync(
+      path.join(libDir, 'cards-data-static.ts'),
+      tsContent
+    );
+    
+    // Also write JSON to public for fallback
     const publicDir = path.join(__dirname, '../public');
     if (!fs.existsSync(publicDir)) {
       fs.mkdirSync(publicDir, { recursive: true });
     }
-    
     fs.writeFileSync(
       path.join(publicDir, 'cards.json'),
       JSON.stringify(cards, null, 2)
     );
     
-    console.log(`✅ Generated cards.json with ${cards.length} cards`);
+    console.log(`✅ Generated cards data with ${cards.length} cards`);
   } catch (error) {
     console.error('Error generating cards data:', error);
     process.exit(1);

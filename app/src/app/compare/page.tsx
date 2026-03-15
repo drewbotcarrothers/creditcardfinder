@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCompare } from '@/context/CompareContext';
 import { CreditCard } from '@/lib/types';
+import { staticCards } from '@/lib/cards-data-static';
 import EmailCapture from '@/components/EmailCapture';
 
 // Winner badge component
@@ -59,28 +60,12 @@ export default function ComparePage() {
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
 
   useEffect(() => {
-    async function fetchCards() {
-      try {
-        // Fetch from static JSON file for static export compatibility
-        const response = await fetch('/cards.json');
-        if (!response.ok) {
-          throw new Error('Failed to fetch cards');
-        }
-        const allCards = await response.json();
-        const selectedCards = allCards.filter((card: CreditCard) => compareCards.includes(card.slug));
-        setCards(selectedCards);
-      } catch (error) {
-        console.error('Error fetching cards:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
+    // Use statically imported cards data (generated at build time)
     if (compareCards.length > 0) {
-      fetchCards();
-    } else {
-      setLoading(false);
+      const selectedCards = staticCards.filter((card) => compareCards.includes(card.slug));
+      setCards(selectedCards);
     }
+    setLoading(false);
   }, [compareCards]);
 
   if (loading) {
