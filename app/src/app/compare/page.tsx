@@ -57,13 +57,23 @@ export default function ComparePage() {
   const { compareCards, removeCard, clearCards } = useCompare();
   const [cards, setCards] = useState<CreditCard[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
 
   useEffect(() => {
-    // Use statically imported cards data (generated at build time)
-    if (compareCards.length > 0) {
-      const selectedCards = staticCards.filter((card) => compareCards.includes(card.slug));
-      setCards(selectedCards);
+    try {
+      // Use statically imported cards data (generated at build time)
+      if (compareCards.length > 0) {
+        if (!staticCards || staticCards.length === 0) {
+          setError('Card data not available. Please try refreshing the page.');
+        } else {
+          const selectedCards = staticCards.filter((card) => compareCards.includes(card.slug));
+          setCards(selectedCards);
+        }
+      }
+    } catch (err) {
+      console.error('Error loading cards:', err);
+      setError('Failed to load card data. Please try again.');
     }
     setLoading(false);
   }, [compareCards]);
@@ -75,6 +85,32 @@ export default function ComparePage() {
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
             <div className="h-96 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-4 sm:pt-8 pb-20 sm:pb-8">
+        <div className="max-w-2xl mx-auto px-4 text-center">
+          <div className="bg-white rounded-2xl shadow-sm border border-red-100 p-8 sm:p-12">
+            <div className="w-24 h-24 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-6">
+              <svg className="w-12 h-12 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+              Error Loading Cards
+            </h1>
+            <p className="text-gray-600 mb-8">{error}</p>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center gap-2 bg-red-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-red-700 transition-colors"
+            >
+              Back to Home
+            </Link>
           </div>
         </div>
       </div>
