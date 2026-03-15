@@ -35,7 +35,7 @@ async function generateCardsData() {
       annualFeeDetail: row.Annual_Fee_Detail || '',
       additionalCardFee: parseFloat(row.Additional_Card_Fee?.replace(/[$,]/g, '') || '0'),
       additionalCardFeeDisplay: row.Additional_Card_Fee || '$0',
-      additionalCardDetail: row.Additional_Card_Detail || '',
+      additionalCardFeeDetail: row.Additional_Card_Detail || '',
       purchaseInterestRate: parseFloat(row.Purchase_Interest_Rate?.replace('%', '') || '0'),
       purchaseInterestRateDisplay: row.Purchase_Interest_Rate || '',
       cashAdvanceInterestRate: parseFloat(row.Cash_Advance_Interest_Rate?.replace('%', '') || '0'),
