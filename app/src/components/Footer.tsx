@@ -31,7 +31,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/quiz" className="text-gray-400 hover:text-white text-sm">
-                  Card Quiz
+                  Card Finder
                 </Link>
               </li>
               <li>
