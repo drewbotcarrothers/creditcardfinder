@@ -1,14 +1,26 @@
 # Enable rewrite engine
 RewriteEngine On
 
-# Don't rewrite files or directories that exist
+# Handle trailing slashes - redirect /path/ to /path
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+# If the request is for a file or directory that exists, serve it
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Rewrite everything else to the corresponding .html file or directory
-RewriteRule ^([^/]+)/?$ $1.html [L]
-RewriteRule ^(.*)$ $1 [L]
+# Handle nested paths: /card/slug -> /card/slug/index.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
+RewriteRule ^(.+)$ $1/index.html [L]
+
+# Handle .html extension: /page -> /page.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}.html -f
+RewriteRule ^(.+)$ $1.html [L]
 
 # Enable compression
 <IfModule mod_deflate.c>
