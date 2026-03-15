@@ -61,8 +61,8 @@ export default function ComparePage() {
   useEffect(() => {
     async function fetchCards() {
       try {
-        // Use API route instead of direct getCards() call for client-side fetching
-        const response = await fetch('/api/cards');
+        // Fetch from static JSON file for static export compatibility
+        const response = await fetch('/cards.json');
         if (!response.ok) {
           throw new Error('Failed to fetch cards');
         }

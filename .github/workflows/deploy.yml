@@ -22,6 +22,10 @@ jobs:
         working-directory: app
         run: npm ci
         
+      - name: Generate cards data
+        working-directory: app
+        run: node scripts/generate-cards-data.js
+        
       - name: Build Next.js app
         working-directory: app
         run: npm run build
@@ -89,6 +93,10 @@ jobs:
       - name: Install dependencies
         working-directory: app
         run: npm ci
+        
+      - name: Generate cards data
+        working-directory: app
+        run: node scripts/generate-cards-data.js
         
       - name: Build Next.js app
         working-directory: app
