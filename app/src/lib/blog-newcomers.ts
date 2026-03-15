@@ -318,7 +318,7 @@ export const newcomersBlogPost: BlogPost = {
     },
     {
       question: 'Should I keep my credit card from my home country?',
-      answer: 'Yes, keep it open if there's no foreign transaction fee. It helps maintain credit age in your home country (useful if you ever return). But it does NOT help your Canadian credit score. You still need Canadian credit cards to build Canadian credit. Use both: home country card when visiting home, Canadian card for everything in Canada.',
+      answer: 'Yes, keep it open if there\'s no foreign transaction fee. It helps maintain credit age in your home country (useful if you ever return). But it does NOT help your Canadian credit score. You still need Canadian credit cards to build Canadian credit. Use both: home country card when visiting home, Canadian card for everything in Canada.',
     },
   ],
 };
