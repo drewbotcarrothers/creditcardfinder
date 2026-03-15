@@ -30,6 +30,11 @@ export default function Footer() {
             <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
+                <Link href="/quiz" className="text-gray-400 hover:text-white text-sm">
+                  Card Quiz
+                </Link>
+              </li>
+              <li>
                 <Link href="/compare" className="text-gray-400 hover:text-white text-sm">
                   Compare Cards
                 </Link>
