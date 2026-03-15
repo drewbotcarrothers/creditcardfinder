@@ -32,12 +32,15 @@ const FieldTooltip = ({ label, tooltip }: { label: string; tooltip: string }) =>
   </div>
 );
 
-// Parse numeric value from string
-const parseNumericValue = (value: string): number | null => {
-  if (!value) return null;
-  const match = value.match(/[\d,]+\.?\d*/);
-  if (match) {
-    return parseFloat(match[0].replace(/,/g, ''));
+// Parse numeric value from string or number
+const parseNumericValue = (value: string | number): number | null => {
+  if (value === null || value === undefined) return null;
+  if (typeof value === 'number') return value;
+  if (typeof value === 'string') {
+    const match = value.match(/[\d,]+\.?\d*/);
+    if (match) {
+      return parseFloat(match[0].replace(/,/g, ''));
+    }
   }
   return null;
 };
@@ -45,7 +48,7 @@ const parseNumericValue = (value: string): number | null => {
 // Determine winner for numeric fields
 const findWinner = (cards: CreditCard[], field: string, type: 'min' | 'max'): number | null => {
   const values = cards.map(card => {
-    const val = card[field as keyof CreditCard] as string;
+    const val = card[field as keyof CreditCard] as string | number;
     return parseNumericValue(val);
   }).filter((val): val is number => val !== null);
 
@@ -333,12 +336,12 @@ export default function ComparePage() {
                     <div className="flex justify-between items-center py-2 border-b border-gray-100">
                       <span className="text-gray-500 text-sm">Annual Fee</span>
                       <span className={`font-semibold ${
-                        parseNumericValue(card.annualFeeDisplay || '') === lowestFee && lowestFee !== null
+                        parseNumericValue(String(card.annualFeeDisplay ?? '')) === lowestFee && lowestFee !== null
                           ? 'text-green-600' 
                           : 'text-gray-900'
                       }`}>
                         {card.annualFeeDisplay}
-                        {parseNumericValue(card.annualFeeDisplay || '') === lowestFee && lowestFee !== null && (
+                        {parseNumericValue(String(card.annualFeeDisplay ?? '')) === lowestFee && lowestFee !== null && (
                           <span className="ml-1 text-xs">👑</span>
                         )}
                       </span>
@@ -347,12 +350,12 @@ export default function ComparePage() {
                     <div className="flex justify-between items-start py-2 border-b border-gray-100">
                       <span className="text-gray-500 text-sm">Welcome Bonus</span>
                       <span className={`font-semibold text-right text-sm max-w-[50%] ${
-                        parseNumericValue(card.welcomeBonusValue || '') === highestBonus && highestBonus !== null
+                        parseNumericValue(String(card.welcomeBonusValue ?? '')) === highestBonus && highestBonus !== null
                           ? 'text-green-600' 
                           : 'text-gray-900'
                       }`}>
                         {card.welcomeBonus}
-                        {parseNumericValue(card.welcomeBonusValue || '') === highestBonus && highestBonus !== null && (
+                        {parseNumericValue(String(card.welcomeBonusValue ?? '')) === highestBonus && highestBonus !== null && (
                           <span className="ml-1">🔥</span>
                         )}
                       </span>
@@ -472,8 +475,8 @@ export default function ComparePage() {
                           <FieldTooltip label={field.label} tooltip={field.tooltip} />
                         </td>
                         {cards.map((card) => {
-                          const value = card[field.key as keyof CreditCard] as string;
-                          const numericValue = parseNumericValue(value || '');
+                          const value = card[field.key as keyof CreditCard] as string | number;
+                          const numericValue = parseNumericValue(value ?? '');
                           const isWinner = winnerValue !== null && numericValue === winnerValue && cards.length > 1;
                           
                           return (
@@ -481,7 +484,7 @@ export default function ComparePage() {
                               <div className={`text-sm ${
                                 field.key === 'welcomeBonusValue' ? 'text-green-600 font-semibold' : 'text-gray-700'
                               } ${isWinner ? 'bg-green-50 px-2 py-1 rounded-lg font-semibold' : ''}`}>
-                                {value || '—'}
+                                {String(value ?? '—')}
                                 {isWinner && (
                                   <span className="ml-1">{field.type === 'min' ? '👑' : '🔥'}</span>
                                 )}
