@@ -1,5 +1,6 @@
 import { BlogPost } from './blog';
 
+// Newcomers to Canada blog post - SEO optimized
 export const newcomersBlogPost: BlogPost = {
   slug: 'first-credit-card-newcomers-canada-2026',
   title: 'First Credit Card for Newcomers to Canada (2026): Complete Guide',
