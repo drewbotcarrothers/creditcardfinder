@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { CreditCard } from '@/lib/types';
 import { useCompare } from '@/context/CompareContext';
+import { buildAffiliateLink, AFFILIATE_DISCLOSURE_SHORT } from '@/lib/affiliate';
 
 interface CardItemProps {
   card: CreditCard;
@@ -12,6 +13,10 @@ interface CardItemProps {
 export default function CardItem({ card }: CardItemProps) {
   const { isInCompare, addCard, removeCard } = useCompare();
   const isSelected = isInCompare(card.slug);
+  
+  // Build affiliate link with tracking
+  const affiliateLink = buildAffiliateLink(card.productLink, card.issuer);
+  const hasLink = affiliateLink && affiliateLink !== '#';
 
   const toggleCompare = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -72,36 +77,76 @@ export default function CardItem({ card }: CardItemProps) {
         </div>
 
         {/* Actions - Mobile Optimized Touch Targets */}
-        <div className="flex gap-2 sm:gap-3">
-          <Link
-            href={`/card/${card.slug}`}
-            className="flex-1 bg-red-600 text-white text-center py-2.5 sm:py-2 rounded-lg font-semibold text-sm hover:bg-red-700 active:bg-red-800 transition-colors min-h-[44px] flex items-center justify-center touch-manipulation"
-          >
-            View Details
-          </Link>
-
-          <button
-            onClick={toggleCompare}
-            className={`px-3 sm:px-4 rounded-lg border-2 font-semibold text-sm transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation ${
-              isSelected
-                ? 'bg-red-50 border-red-600 text-red-600'
-                : 'border-gray-300 text-gray-600 hover:border-red-600 hover:text-red-600'
-            }`}
-            aria-label={isSelected ? 'Remove from comparison' : 'Add to comparison'}
-            title={isSelected ? 'Remove from comparison' : 'Add to comparison'}
-          >
-            {isSelected ? (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
+        <div className="flex flex-col gap-2">
+          {/* Primary Actions */}
+          <div className="flex gap-2 sm:gap-3">
+            {hasLink ? (
+              <a
+                href={affiliateLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-green-600 text-white text-center py-2.5 sm:py-2 rounded-lg font-semibold text-sm hover:bg-green-700 active:bg-green-800 transition-colors min-h-[44px] flex items-center justify-center touch-manipulation"
+                onClick={() => {
+                  // Track affiliate click
+                  if (typeof window !== 'undefined' && (window as any).gtag) {
+                    (window as any).gtag('event', 'apply_click', {
+                      event_category: 'affiliate',
+                      event_label: card.creditCardName,
+                      issuer: card.issuer,
+                    });
+                  }
+                }}
+              >
+                Apply Now
+              </a>
             ) : (
-              // Comparison icon - balance scale / side-by-side columns
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
-              </svg>
+              <Link
+                href={`/card/${card.slug}`}
+                className="flex-1 bg-red-600 text-white text-center py-2.5 sm:py-2 rounded-lg font-semibold text-sm hover:bg-red-700 active:bg-red-800 transition-colors min-h-[44px] flex items-center justify-center touch-manipulation"
+              >
+                View Details
+              </Link>
             )}
-          </button>
+
+            <button
+              onClick={toggleCompare}
+              className={`px-3 sm:px-4 rounded-lg border-2 font-semibold text-sm transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation ${
+                isSelected
+                  ? 'bg-red-50 border-red-600 text-red-600'
+                  : 'border-gray-300 text-gray-600 hover:border-red-600 hover:text-red-600'
+              }`}
+              aria-label={isSelected ? 'Remove from comparison' : 'Add to comparison'}
+              title={isSelected ? 'Remove from comparison' : 'Add to comparison'}
+            >
+              {isSelected ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                </svg>
+              )}
+            </button>
+          </div>
+          
+          {/* Secondary Action - Only show if we have direct apply link */}
+          {hasLink && (
+            <Link
+              href={`/card/${card.slug}`}
+              className="text-center py-2 text-sm text-gray-600 hover:text-red-600 transition-colors"
+            >
+              View Details →
+            </Link>
+          )}
         </div>
+        
+        {/* Affiliate Disclosure */}
+        {hasLink && (
+          <p className="text-[10px] text-gray-400 text-center mt-2 leading-tight">
+            {AFFILIATE_DISCLOSURE_SHORT}
+          </p>
+        )}
       </div>
     </div>
   );

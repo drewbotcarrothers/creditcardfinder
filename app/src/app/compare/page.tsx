@@ -7,6 +7,7 @@ import { useCompare } from '@/context/CompareContext';
 import { CreditCard } from '@/lib/types';
 import { staticCards } from '@/lib/cards-data-static';
 import EmailCapture from '@/components/EmailCapture';
+import { buildAffiliateLink, AFFILIATE_DISCLOSURE_SHORT } from '@/lib/affiliate';
 
 // Winner badge component
 const WinnerBadge = () => (
@@ -504,17 +505,38 @@ export default function ComparePage() {
                     </td>
                     {cards.map((card) => (
                       <td key={card.id} className="py-4 px-4 sm:px-6">
-                        <a
-                          href={card.productLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-2 w-full bg-red-600 text-white py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-red-700 transition-colors"
-                        >
-                          Apply Now
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
+                        {card.productLink && card.productLink !== '#' ? (
+                          <>
+                            <a
+                              href={buildAffiliateLink(card.productLink, card.issuer)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center gap-2 w-full bg-red-600 text-white py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-red-700 transition-colors"
+                              onClick={() => {
+                                if (typeof window !== 'undefined' && (window as any).gtag) {
+                                  (window as any).gtag('event', 'apply_click', {
+                                    event_category: 'affiliate',
+                                    event_label: card.creditCardName,
+                                    issuer: card.issuer,
+                                    location: 'compare_page',
+                                  });
+                                }
+                              }}
+                            >
+                              Apply Now
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                            </a>
+                            <p className="text-[10px] text-gray-400 text-center mt-2">
+                              {AFFILIATE_DISCLOSURE_SHORT}
+                            </p>
+                          </>
+                        ) : (
+                          <div className="text-center text-sm text-gray-400 py-2">
+                            Link unavailable
+                          </div>
+                        )}
                       </td>
                     ))}
                     {emptySlots > 0 && <td className="py-4 px-4 sm:px-6" />}
