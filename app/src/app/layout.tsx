@@ -75,14 +75,14 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         {/* Google Analytics - Deferred for performance */}
-        <script defer src="https://www.googletagmanager.com/gtag/js?id=G-0ENLPEM4YP"></script>
+        <script defer src="https://www.googletagmanager.com/gtag/js?id=G-F9J729SEZS"></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-0ENLPEM4YP');
+              gtag('config', 'G-F9J729SEZS');
             `,
           }}
         />
