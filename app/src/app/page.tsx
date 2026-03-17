@@ -32,6 +32,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://canadiancreditcardfinder.com',
   },
+  verification: {
+    google: 'oIWFujFUr96sNoLM3OGi02ZA01Oa5xX-g6kc6MfZr0w',
+  },
 };
 
 export default async function HomePage() {
