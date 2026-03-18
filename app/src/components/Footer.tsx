@@ -69,7 +69,7 @@ export default function Footer() {
             </div>
           </div>
 
-        <!-- Copyright -->
+        {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-gray-800 text-center">
           <p className="text-gray-400 text-sm">
             © {currentYear} Canadian Credit Card Finder. All rights reserved.
