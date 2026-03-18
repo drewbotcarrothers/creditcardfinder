@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { CreditCard } from '@/lib/types';
 import { useCompare } from '@/context/CompareContext';
-import { buildAffiliateLink, AFFILIATE_DISCLOSURE_SHORT } from '@/lib/affiliate';
+import { buildAffiliateLink } from '@/lib/affiliate';
 
 interface CardItemProps {
   card: CreditCard;
@@ -144,16 +144,6 @@ export default function CardItem({ card }: CardItemProps) {
           )}
         </div>
         
-        {/* Affiliate Disclosure - Prominent */}
-        {hasLink && (
-          <div className="mt-2 p-2 bg-gray-50 rounded border border-gray-100">
-            <p className="text-[11px] text-gray-500 leading-tight">
-              <span className="font-semibold">Affiliate Disclosure: </span>
-              We earn a commission if you apply through our link (at no extra cost to you). 
-              This supports our free comparison service.
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );
