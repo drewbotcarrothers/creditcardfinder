@@ -6,7 +6,8 @@ import { getCardBySlug, getRelatedCards, getCards } from '@/lib/data';
 import { CreditCard } from '@/lib/types';
 import StructuredData from '@/components/StructuredData';
 import { CardInternalLinks, BreadcrumbSchema } from '@/components/InternalLinks';
-import { buildAffiliateLink, AFFILIATE_DISCLOSURE } from '@/lib/affiliate';
+import ApplyButton from '@/components/ApplyButton';
+import OurVerdictButton from '@/components/OurVerdictButton';
 
 interface CardPageProps {
   params: Promise<{ slug: string }>;
@@ -369,42 +370,12 @@ export default async function CardPage({ params }: CardPageProps) {
                 </div>
 
                 {/* CTA Button */}
-                {card.productLink && card.productLink !== '#' ? (
-                  <>
-                    <a
-                      href={buildAffiliateLink(card.productLink, card.issuer)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-xl text-center transition-colors flex items-center justify-center gap-2"
-                      onClick={() => {
-                        if (typeof window !== 'undefined' && (window as any).gtag) {
-                          (window as any).gtag('event', 'apply_click', {
-                            event_category: 'affiliate',
-                            event_label: card.creditCardName,
-                            issuer: card.issuer,
-                            location: 'card_detail',
-                          });
-                        }
-                      }}
-                    >
-                      Apply Now
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                    
-                    <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                      <p className="text-xs text-gray-500 leading-relaxed">
-                        <span className="font-semibold">Disclosure: </span>
-                        {AFFILIATE_DISCLOSURE}
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <div className="w-full bg-gray-300 text-gray-600 font-bold py-4 px-6 rounded-xl text-center cursor-not-allowed">
-                    Apply Link Unavailable
-                  </div>
-                )}
+                <ApplyButton
+                  productLink={card.productLink}
+                  issuer={card.issuer}
+                  cardName={card.creditCardName}
+                  location="card_detail"
+                />
               </div>
             </div>
 
@@ -724,17 +695,9 @@ export default async function CardPage({ params }: CardPageProps) {
                 <p className="text-lg text-red-100 leading-relaxed mb-6">
                   {verdict}
                 </p>
-                <Link
-                  href={card.productLink || '#'}
-                  target={card.productLink ? "_blank" : undefined}
-                  rel={card.productLink ? "noopener noreferrer" : undefined}
-                  className="inline-flex items-center gap-2 bg-white text-red-600 font-bold py-3 px-6 rounded-xl hover:bg-red-50 transition-colors"
-                >
-                  Apply Now
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </Link>
+                <OurVerdictButton
+                  productLink={card.productLink}
+                />
               </div>
 
               {/* FAQ */}
