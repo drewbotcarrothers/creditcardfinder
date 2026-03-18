@@ -56,7 +56,21 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+          {/* Affiliate Disclosure */}
+          <div className="col-span-1 md:col-span-3 mt-6 pt-6 border-t border-gray-700">
+            <div className="bg-gray-800 rounded-lg p-4">
+              <h4 className="text-sm font-semibold text-amber-400 mb-2">Affiliate Disclosure</h4>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Canadian Credit Card Finder is an independent comparison website. We may receive compensation 
+                when you click on links to products from our partner card issuers. This comes at no additional 
+                cost to you and helps us maintain this free comparison service. Our reviews and recommendations 
+                are based on independent analysis and are not influenced by compensation we receive.
+              </p>
+            </div>
+          </div>
+
+        <!-- Copyright -->
+        <div className="mt-8 pt-8 border-t border-gray-800 text-center">
           <p className="text-gray-400 text-sm">
             © {currentYear} Canadian Credit Card Finder. All rights reserved.
           </p>

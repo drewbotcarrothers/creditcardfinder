@@ -97,7 +97,10 @@ export default function CardItem({ card }: CardItemProps) {
                   }
                 }}
               >
-                Apply Now
+                Visit {card.issuer}
+                <svg className="w-3 h-3 ml-1 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
               </a>
             ) : (
               <Link
@@ -141,11 +144,15 @@ export default function CardItem({ card }: CardItemProps) {
           )}
         </div>
         
-        {/* Affiliate Disclosure */}
+        {/* Affiliate Disclosure - Prominent */}
         {hasLink && (
-          <p className="text-[10px] text-gray-400 text-center mt-2 leading-tight">
-            {AFFILIATE_DISCLOSURE_SHORT}
-          </p>
+          <div className="mt-2 p-2 bg-gray-50 rounded border border-gray-100">
+            <p className="text-[11px] text-gray-500 leading-tight">
+              <span className="font-semibold">Affiliate Disclosure: </span>
+              We earn a commission if you apply through our link (at no extra cost to you). 
+              This supports our free comparison service.
+            </p>
+          </div>
         )}
       </div>
     </div>

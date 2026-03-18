@@ -376,12 +376,12 @@ export default function ComparePage() {
                   </div>
 
                   <a
-                    href={card.productLink}
+                    href={buildAffiliateLink(card.productLink, card.issuer)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-5 flex items-center justify-center gap-2 w-full bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-red-700 transition-colors"
                   >
-                    Apply Now
+                    Visit {card.issuer}
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -523,14 +523,17 @@ export default function ComparePage() {
                                 }
                               }}
                             >
-                              Apply Now
+                              Visit {card.issuer}
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                               </svg>
                             </a>
-                            <p className="text-[10px] text-gray-400 text-center mt-2">
-                              {AFFILIATE_DISCLOSURE_SHORT}
-                            </p>
+                            <div className="mt-2 p-2 bg-amber-50 rounded border border-amber-100">
+                              <p className="text-[10px] text-amber-800 text-center leading-tight">
+                                <span className="font-semibold">Disclosure: </span>
+                                We earn a commission at no extra cost to you
+                              </p>
+                            </div>
                           </>
                         ) : (
                           <div className="text-center text-sm text-gray-400 py-2">
