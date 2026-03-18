@@ -16,7 +16,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Canadian Credit Card Finder | Compare & Find Your Perfect Card 2025',
+  title: 'Canadian Credit Card Finder | Compare & Find Your Perfect Card 2026',
   description: 'Compare 90+ Canadian credit cards. Filter by rewards, cashback, travel perks, annual fees & more. Find your perfect card with our personalized quiz.',
   keywords: [
     'Canadian credit cards',
