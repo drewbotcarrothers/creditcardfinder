@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { getAllBlogPosts } from '@/lib/blog';
 import StructuredData from '@/components/StructuredData';
 
+// Required for static export with async data fetching
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: 'Credit Card Blog | Tips, Guides & Reviews 2025 | Canadian Credit Card Finder',
   description: 'Expert guides on choosing credit cards, maximizing rewards, improving credit scores, and finding the best welcome bonuses in Canada.',

@@ -5,6 +5,9 @@ import { getBlogPostBySlug, getBlogPosts } from '@/lib/blog';
 import { BlogInternalLinks, BreadcrumbSchema } from '@/components/InternalLinks';
 import StructuredData from '@/components/StructuredData';
 
+// Required for static export
+export const dynamic = 'force-static';
+
 interface BlogPostProps {
   params: Promise<{
     slug: string;
