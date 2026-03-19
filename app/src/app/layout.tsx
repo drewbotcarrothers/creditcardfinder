@@ -26,6 +26,11 @@ export const metadata: Metadata = {
     'travel rewards cards',
     'credit card quiz',
   ],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
     title: 'Canadian Credit Card Finder | Compare 90+ Cards',
     description: 'Find your perfect credit card. Compare rewards, fees, and benefits.',
