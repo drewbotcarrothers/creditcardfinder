@@ -8,6 +8,8 @@ import StructuredData from '@/components/StructuredData';
 import { CardInternalLinks, BreadcrumbSchema } from '@/components/InternalLinks';
 import ApplyButton from '@/components/ApplyButton';
 import OurVerdictButton from '@/components/OurVerdictButton';
+import YouTubeEmbed from '@/components/YouTubeEmbed';
+import { getVideoByCardName } from '@/lib/videoMapping';
 
 interface CardPageProps {
   params: Promise<{ slug: string }>;
@@ -512,6 +514,19 @@ export default async function CardPage({ params }: CardPageProps) {
                   </div>
                 )}
               </div>
+
+              {/* 4.5 Video Review */}
+              {(() => {
+                const video = getVideoByCardName(card.creditCardName);
+                return video ? (
+                  <div id="video-review" className="scroll-mt-24">
+                    <YouTubeEmbed 
+                      embedUrl={video.embedUrl} 
+                      title={`${card.creditCardName} Video Review`} 
+                    />
+                  </div>
+                ) : null;
+              })()}
 
               {/* 5. Insurance Coverage */}
               {insuranceList.length > 0 && (
